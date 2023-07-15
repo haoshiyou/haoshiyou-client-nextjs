@@ -7,4 +7,4 @@ type ListType = {
     imageIds: [string];
   };
 
-  export { ListType };
+  export { type ListType };
