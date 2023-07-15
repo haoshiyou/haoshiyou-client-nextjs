@@ -1,7 +1,5 @@
 import React from 'react';
-import { HomeDetail } from './components/HomeDetail/HomeDetail';
-import Image from 'next/image'
-
+import App from '@/pages/App';
 import { Metadata, ResolvingMetadata } from 'next'
  
 type Props = {
@@ -35,8 +33,6 @@ export async function generateMetadata(
 
 export default function Home() {
   return (
-    <div>
-      <HomeDetail />
-    </div>
+    <App />
   );
 }
