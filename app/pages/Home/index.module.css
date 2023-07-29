@@ -8,24 +8,34 @@
 
 .searchContainer {
   position: relative;
+  width: 100%;
 }
 
 .filterContainer {
   position: relative;
 }
 
+.toggleContainer {
+  display: none;
+  width: 40px;
+}
+.toggleContainer:hover {
+  cursor: pointer;
+  color: #21b3fe;
+}
+
 .mapContainer {
   position: relative;
-  display: inline-block;
-  width: calc(100% - 600px);
   height: 100%;
+  width: 100%;
+  float: left;
 }
 
 .listContainer {
   position: relative;
-  display: inline-block;
-  width: 600px;
   height: 100%;
+  width: 100%;
+  float: left;
 }
 
 .actionContainer {
@@ -34,6 +44,8 @@
 
 .contentContainer {
   height: calc(100vh - 80px);
+  display: grid;
+  grid-template-columns: minmax(30%, 600px) 1fr;
 }
 
 .mouseActionInfo {
@@ -41,4 +53,21 @@
   bottom: 0;
   left: 0;
   z-index: 10000;
+}
+
+@media screen and (max-width: 1400px) {
+  .contentContainer {
+    grid-template-columns: 1fr 0px;
+  }
+  .searchContainer {
+    padding-right: 40px;
+  }
+  .toggleContainer {
+    display: inline-block;
+    width: 40px;
+    z-index: 2;
+    position: absolute;
+    right: -10px;
+    top: 10px;
+  }
 }

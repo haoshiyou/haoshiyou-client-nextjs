@@ -6,11 +6,12 @@ import Search from '@/components/Search';
 import Filter from '@/components/Filter';
 import { ListType } from '@/types';
 import { HAOSHIYOU_REQ_URL } from '@/constants';
+import { UnorderedListOutlined, AimOutlined } from '@ant-design/icons';
 import _get from 'lodash/get';
 
 import styles from './index.module.css';
 
-const debugMode = true;
+const debugMode = false;
 
 const splitListItems = (listData: ListType[], gap: number) => {
   const sortedData = listData
@@ -28,6 +29,7 @@ const HomePage: React.FC = () => {
   const [listData, setListData] = useState<ListType[]>([]);
   const [mouseoverId, setMouseoverId] = useState<string>('');
   const [mouseClickedId, setMouseClickedId] = useState<string>('');
+  const [toogleLayout, setToogleLayout] = useState<string>('list');
 
   useEffect(() => {
     setLoading(true);
@@ -72,21 +74,14 @@ const HomePage: React.FC = () => {
         <div className={styles.filterContainer}>
           <Filter name='Filter' />
         </div>
+        <div className={styles.toggleContainer}>
+          {toogleLayout === 'list' && <UnorderedListOutlined onClick={() => setToogleLayout('map')} />}
+          {toogleLayout === 'map' && <AimOutlined onClick={() => setToogleLayout('list')} />}
+        </div>
       </div>
         
       <div className={styles.contentContainer}>
-        <div className={styles.mapContainer}>
-          <MapContainer 
-            name='MapContainer' 
-            loading={loading} 
-            listData={listData}
-            mouseoverId={mouseoverId}
-            setMouseoverId={setMouseoverId}
-            mouseClickedId={mouseClickedId}
-            setMouseClickedId={setMouseClickedId}
-          />
-        </div>
-        <div className={styles.listContainer}>
+        <div className={styles.listContainer} style={{display: toogleLayout === 'list' ? 'grid' : 'none'}}>
           <List 
             name='List'
             loading={loading} 
@@ -96,6 +91,17 @@ const HomePage: React.FC = () => {
             mouseClickedId={mouseClickedId}
             setMouseClickedId={setMouseClickedId}
             onScrollBottom={onScrollBottom}
+          />
+        </div>
+        <div className={styles.mapContainer}>
+          <MapContainer 
+            name='MapContainer' 
+            loading={loading} 
+            listData={listData}
+            mouseoverId={mouseoverId}
+            setMouseoverId={setMouseoverId}
+            mouseClickedId={mouseClickedId}
+            setMouseClickedId={setMouseClickedId}
           />
         </div>
       </div>

@@ -78,7 +78,9 @@ const HomeInfo: React.FC<Props> = (props) => {
         {!loading && (
         <>
             <div className={styles.navBar} onClick={navOnClick}>
-                <LeftOutlined />
+                <div className={styles.navBarIcon}>
+                    <LeftOutlined />
+                </div>
             </div>
             <div className={styles.content}>
                 <div className={styles.image}>
@@ -130,7 +132,8 @@ const HomeInfo: React.FC<Props> = (props) => {
                         
                     </div>
                 </div>
-                <div className={styles.amenity}>
+                {amenityArray.length > 0 && (
+                    <div className={styles.amenity}>
                     <div className={styles.amenityTitle}>
                         设施／须知
                     </div>
@@ -141,6 +144,7 @@ const HomeInfo: React.FC<Props> = (props) => {
                         {amenityArray}
                     </div>
                 </div>
+                )}
                 <div className={styles.contact}>
                     <div className={styles.contactTitle}>
                         联系房东

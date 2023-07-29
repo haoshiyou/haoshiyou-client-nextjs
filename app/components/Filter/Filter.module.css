@@ -28,3 +28,9 @@
   color: #21b3fe;
 
 }
+
+.fnIcon {
+  display: inline-block;
+  position: relative;
+  top: -3px;
+}

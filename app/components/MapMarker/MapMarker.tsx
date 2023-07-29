@@ -32,7 +32,9 @@ const MapMarker: React.FC<Props> = (props) => {
     e.preventDefault();
     if (setMouseClickedId) setMouseClickedId((prevUid: string)=> {
         if (prevUid === uid) {
-            return ''
+          window.location.href = `/?id=${uid}`;
+          return '';
+          
         }
         return uid;
     });

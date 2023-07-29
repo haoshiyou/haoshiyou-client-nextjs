@@ -21,7 +21,6 @@ const Search: React.FC<Props> = (props) => {
           placeholder={'搜索 区域/城市'}
         />
       </div>
-      
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Layout, Row, Typography } from 'antd';
+import { Layout, Row, Typography, Skeleton } from 'antd';
 import _get from 'lodash/get';
 import _debounce from 'lodash/debounce';
 import ListItem from '@/components/ListItem';
@@ -63,7 +63,7 @@ const List: React.FC<Props> = (props) => {
 
   return (
     <div className={styles.container}>
-      {loading && <div className={styles.loading}>Loading</div>}
+      {loading && <div className={styles.loading}><Skeleton active /><Skeleton active /></div>}
       {!loading && (
         <div
           className={styles.listContainer}

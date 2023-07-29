@@ -14,11 +14,15 @@ const Filter: React.FC<Props> = (props) => {
     <div className={styles.title}>
       <div className={styles.sort}>
         排序
-        <SortAscendingOutlined />
+        <div className={styles.fnIcon}>
+          <SortAscendingOutlined />
+        </div>
       </div>
       <div className={styles.condition}>
         筛选条件 
-        <FilterOutlined />
+        <div className={styles.fnIcon}>
+          <FilterOutlined />
+        </div>
       </div>
     </div>
   );

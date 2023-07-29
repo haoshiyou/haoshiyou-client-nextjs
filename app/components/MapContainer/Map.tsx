@@ -1,4 +1,4 @@
-import { Layout, Row, Typography } from 'antd';
+import { Layout, Row, Typography, Skeleton } from 'antd';
 import React from 'react';
 import GoogleMapReact from 'google-map-react';
 import _get from 'lodash/get';
@@ -53,7 +53,7 @@ const Map: React.FC<Props> = (props) => {
   
   return (
     <div className={styles.container}>
-      {loading && <div className={styles.loading}>Loading</div>}
+      {loading && <div className={styles.loading}><Skeleton active /><Skeleton active /></div>}
       {!loading && (
         <div className={styles.mapContainer} onMouseLeave={onMapLeave}>
           <GoogleMapReact

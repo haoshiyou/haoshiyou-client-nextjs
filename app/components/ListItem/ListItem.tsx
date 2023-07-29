@@ -69,9 +69,8 @@ const ListItem: React.FC<Props> = (props) => {
           <div className={styles.pricing}>
             {priceTranslationFn(price)}
           </div>
-          <div className={styles.hLink}>
-          
-          <ExportOutlined onClick={linkOnclick(uid)} />
+          <div className={cls(styles.hLink, isMarkerClicked && styles.clicked)}>
+            <ExportOutlined onClick={linkOnclick(uid)} />
           </div>
         </div>
       </div>
