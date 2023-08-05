@@ -1,5 +1,5 @@
 'use client'
-import { Skeleton, Image } from 'antd';
+import { Skeleton, Image, Drawer } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { LeftOutlined, PhoneOutlined, MailOutlined, WechatOutlined, UserOutlined, CheckSquareOutlined } from '@ant-design/icons';
 import { HAOSHIYOU_REQ_URL } from '@/constants';
@@ -34,6 +34,7 @@ const HomeInfo: React.FC<Props> = (props) => {
   const { uid } = props;
   const [detailObj, setDetailObj] = useState<Object>({});
   const [loading, setLoading] = useState<boolean>(false);
+  const [contactDrawerVisibility, setContactDrawerVisibility] = useState<boolean>(false);
   const [mapProps, setMapProps] = useState<MapProps>(defaultProps);
   const title = _get(detailObj, 'title', '--');
   const lastUpdated = _get(detailObj, 'lastUpdated', '--');
@@ -70,6 +71,34 @@ const HomeInfo: React.FC<Props> = (props) => {
   const navOnClick = (e: React.MouseEvent) => {
     e.preventDefault();
     window.location.href = `/`;
+  };
+
+  const contactDrawerOnClose = (e: React.MouseEvent | React.KeyboardEvent) => {
+    setContactDrawerVisibility(false);
+  };
+
+  const contactDrawer = (
+    <Drawer
+        placement='bottom'
+        closable={false}
+        onClose={contactDrawerOnClose}
+        open={contactDrawerVisibility}
+        key={uid}
+        destroyOnClose
+        height={300}
+    >
+        <div className={styles.contactLines}>
+            <div className={styles.contactLine}>contact@gmail.com</div>
+            <div className={styles.contactLine}>发送邮件</div>
+            <div className={styles.contactLine}>拨打电话</div>
+            <div className={styles.contactLine}>复制号码</div>
+            <div className={styles.contactLine}>取消</div>
+        </div>
+        
+    </Drawer>
+  );
+  const contactOnClick = () => {
+    setContactDrawerVisibility(true);
   };
 
   return (
@@ -179,9 +208,10 @@ const HomeInfo: React.FC<Props> = (props) => {
                 <div className={styles.price}>
                     {priceTranslationFn(price)}
                 </div>
-                <div className={styles.contactOwner}>
+                <div className={styles.contactOwner} onClick={contactOnClick}>
                     联系房东
                 </div>
+                {contactDrawer}
             </div>
         </>
         )}

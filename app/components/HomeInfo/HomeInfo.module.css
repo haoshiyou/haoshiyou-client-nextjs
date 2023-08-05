@@ -164,3 +164,14 @@
         height: 50px;
     }
 }
+
+.contactLine {
+    height: 50px;
+    text-align: center;
+    font-size: 18px;
+    padding-top: 15px;
+}
+
+.contactLines {
+    height: 300px;
+}
