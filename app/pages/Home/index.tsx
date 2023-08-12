@@ -33,7 +33,7 @@ const HomePage: React.FC = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch(HAOSHIYOU_REQ_URL)
+    fetch(`${HAOSHIYOU_REQ_URL}?size=1400`)
     .then(x => x.json()).then((x) => {
       setCachedData(splitListItems(x, 0)[1]);
       const [initialListItems, restListItems] = splitListItems(x, 100);
@@ -68,12 +68,15 @@ const HomePage: React.FC = () => {
         </div>
       )}
       <div className={styles.actionContainer}>
+        <div className={styles.logo}>
+          <div className={styles.logoIcon} />
+          <div className={styles.logoText}>
+            好室友
+          </div>
+        </div>
         <div className={styles.searchContainer}>
           <Search name='Search' />
-        </div>
-        <div className={styles.filterContainer}>
-          <Filter name='Filter' />
-        </div>
+        </div>    
         <div className={styles.toggleContainer}>
           {toogleLayout === 'list' && <UnorderedListOutlined onClick={() => setToogleLayout('map')} />}
           {toogleLayout === 'map' && <AimOutlined onClick={() => setToogleLayout('list')} />}
@@ -82,6 +85,9 @@ const HomePage: React.FC = () => {
         
       <div className={styles.contentContainer}>
         <div className={styles.listContainer} style={{display: toogleLayout === 'list' ? 'grid' : 'none'}}>
+          <div className={styles.filterContainer}>
+            <Filter name='Filter' />
+          </div>
           <List 
             name='List'
             loading={loading} 

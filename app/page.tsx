@@ -1,6 +1,8 @@
 import React from 'react';
 import App from '@/pages/App';
-import { Metadata, ResolvingMetadata } from 'next'
+import { Metadata, ResolvingMetadata } from 'next';
+import { HAOSHIYOU_REQ_URL } from '@/constants';
+
  
 type Props = {
   params: { id: string }
@@ -16,7 +18,7 @@ export async function generateMetadata(
   // fetch data
   const product = { title: '' };
   if (id) {
-    const res = await fetch(`https://haoshiyou-server-prod.herokuapp.com/api/HsyListings/${id}`).then((res) => res.json());
+    const res = await fetch(`${HAOSHIYOU_REQ_URL}/${id}`).then((res) => res.json());
     product.title = res.title;
   }
  

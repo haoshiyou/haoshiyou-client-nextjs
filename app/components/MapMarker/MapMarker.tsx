@@ -20,6 +20,8 @@ const MapMarker: React.FC<Props> = (props) => {
   const { text, uid, price, mouseoverId, setMouseoverId, mouseClickedId, setMouseClickedId } = props;
   const isMarkerMouseover = uid === mouseoverId;
   const isMarkerClicked = uid === mouseClickedId;
+  const priceMonthly = priceTranslationFn(price).split('/')[0];
+  const priceUnit = priceTranslationFn(price).split('/')[1];
   const onMouseOver = (e: React.MouseEvent) => {
     e.preventDefault();
     if (setMouseoverId) setMouseoverId(uid);
@@ -32,7 +34,7 @@ const MapMarker: React.FC<Props> = (props) => {
     e.preventDefault();
     if (setMouseClickedId) setMouseClickedId((prevUid: string)=> {
         if (prevUid === uid) {
-          window.location.href = `/?id=${uid}`;
+          // window.location.href = `/?id=${uid}`;
           return '';
           
         }
@@ -48,8 +50,9 @@ const MapMarker: React.FC<Props> = (props) => {
         onMouseLeave={onListItemMouseLeave}
     >
       <div className={cls(styles.markerEle, (isMarkerMouseover || isMarkerClicked) && styles.isListHover)}>
+        <div className={styles.markerArrow} />
         <div className={styles.markerEleText}>
-            {priceTranslationFn(price)}
+            {priceMonthly}
         </div>
       </div>
     </div>

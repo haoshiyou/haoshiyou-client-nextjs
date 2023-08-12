@@ -7,6 +7,7 @@ import _get from 'lodash/get';
 import GoogleMapReact from 'google-map-react';
 import MapMarker from '@/components/MapMarker';
 import { priceTranslationFn, getDateDiff } from '@/helper';
+import cls from 'classnames';
 
 import styles from './HomeInfo.module.css';
 
@@ -87,14 +88,15 @@ const HomeInfo: React.FC<Props> = (props) => {
         destroyOnClose
         height={300}
     >
-        <div className={styles.contactLines}>
-            <div className={styles.contactLine}>contact@gmail.com</div>
-            <div className={styles.contactLine}>发送邮件</div>
-            <div className={styles.contactLine}>拨打电话</div>
-            <div className={styles.contactLine}>复制号码</div>
-            <div className={styles.contactLine}>取消</div>
+        <div className={styles.mask}>
+            <div className={styles.contactLines}>
+                <div className={styles.contactLine}>contact@gmail.com</div>
+                <div className={styles.contactLine}>发送邮件</div>
+                <div className={styles.contactLine}>拨打电话</div>
+                <div className={styles.contactLine}>复制号码</div>
+                <div className={cls(styles.contactLine, styles.cancel)}>取消</div>
+            </div>
         </div>
-        
     </Drawer>
   );
   const contactOnClick = () => {

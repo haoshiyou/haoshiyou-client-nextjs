@@ -1,4 +1,4 @@
-export const priceTranslationFn = (price: string) => `${price ? `$${price}/月`: '价格待议'}`;
+export const priceTranslationFn = (price: string) => `${price ? `$${price}/month`: '价格待议'}`;
 
 const thresholds = [
     {

@@ -166,12 +166,25 @@
 }
 
 .contactLine {
-    height: 50px;
+    height: 55px;
     text-align: center;
     font-size: 18px;
     padding-top: 15px;
+    padding-bottom: 3px;
+    border-bottom: 1px solid #c3c3c3;
 }
 
 .contactLines {
     height: 300px;
+    border-radius: 12px;
+    background-color: #ffffff;;
+}
+.contactLine.cancel {
+    border-top: 2px solid #c3c3c3;
+    border-bottom: unset;
+    height: 80px;
+}
+.mask {
+    margin: -25px;
+    background: rgba(0, 0, 0, 0.45);
 }

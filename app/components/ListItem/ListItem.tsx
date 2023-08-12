@@ -31,6 +31,8 @@ const ListItem: React.FC<Props> = (props) => {
   const imageUrl = imageId ? `http://res.cloudinary.com/xinbenlv/image/upload/c_fill,g_north,w_400,h_300,g_center/${imageId}.jpg`: '';
   const isMarkerMouseover = uid === mouseoverId;
   const isMarkerClicked = uid === mouseClickedId;
+  const priceMonthly = priceTranslationFn(price).split('/')[0];
+  const priceUnit = priceTranslationFn(price).split('/')[1];
   const onListItemMouseover = (e: React.MouseEvent) => {
     e.preventDefault();
     setMouseoverId(uid);
@@ -51,16 +53,19 @@ const ListItem: React.FC<Props> = (props) => {
   const linkOnclick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    // window.location.href = `/?id=${uid}`;
   };
   const itemOnClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     window.location.href = `/?id=${uid}`;
   };
+  const popoverOnClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
 
   const popoverContent = (
-    <span className={styles.popoverContent}>
+    <div className={styles.popoverContent} onClick={popoverOnClick}>
       <div className={styles.userIcon}>
         <UserOutlined />
       </div>
@@ -72,7 +77,7 @@ const ListItem: React.FC<Props> = (props) => {
           Email: {email}
         </div>
       </div>
-    </span>
+    </div>
   );
 
   return (
@@ -83,16 +88,41 @@ const ListItem: React.FC<Props> = (props) => {
       onClick={onClick}
       list-uid={uid}
       >
+      <div className={styles.picContainer}>
+      {imageId && (
+      <img className={styles.img} 
+        src={imageUrl}
+        alt="img"
+      />)}
+      {!imageId && (
+        <div className={styles.noData} />
+      )}
+      </div>
       <div className={styles.gridContainer} onClick={itemOnClick}>
-        <div className={styles.title}>
+        <div className={styles.title} title={content}>
           {content}
         </div>
         <div className={styles.locationAndDate}>
-          {addressCity} {lastUpdated}
+          {addressCity && (
+          <span className={styles.tag}>
+            {addressCity}
+          </span>
+          )}
+          {lastUpdated && (
+          <span className={styles.tag}>
+            {lastUpdated}
+          </span>
+          )}
         </div>
         <div className={styles.pricingAndLink}>
           <div className={styles.pricing}>
-            {priceTranslationFn(price)}
+            <span className={styles.month}>
+              {priceMonthly}
+            </span>
+            {priceUnit && (
+              <span className={styles.unit}>
+                /{priceUnit}
+              </span>)}
           </div>
           <Popover 
             placement='bottom' 
@@ -107,13 +137,6 @@ const ListItem: React.FC<Props> = (props) => {
             </div>
           </Popover>
         </div>
-      </div>
-      <div className={styles.picContainer}>
-        {imageId && (
-        <img className={styles.img} 
-          src={imageUrl}
-          alt="img"
-        />)}
       </div>
     </div>
   );

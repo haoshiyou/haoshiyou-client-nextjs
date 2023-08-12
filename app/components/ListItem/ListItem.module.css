@@ -1,7 +1,7 @@
 .container {
     position: relative;
     font-size: 15px;
-    padding: 10px;
+    padding: 10px 20px;
     border-bottom: 1px solid lightgrey;
     height: 120px;
 }
@@ -11,49 +11,58 @@
         display: flex;
     }
 }
-.onHover {
-    background-color: lightgrey;
-}
 
 .gridContainer {
-    padding-right: 100px;
+    padding-left: 120px;
 }
 
 .picContainer {
     position: absolute;
     top: 0;
-    right: 0;
-    width: 114px;
-    height: 114px;
-    padding-left: 10px;
+    left: 0;
+    width: 140px;
+    height: 120px;
+    padding: 20px 10px;
 }
 
 .img {
-    width: 114px;
-    height: 114px;
+    width: 110px;
+    height: 80px;
+    border-radius: 5px;
+}
+
+.noData {
+    width: 110px;
+    height: 80px;
+    border-radius: 5px;
+    background-image: url(../../assets/icons/no-data.svg);
+    background-size: contain;
 }
 
 
 .title {
-    font-size: 15px;
+    color: #000000;
+    font-size: 16px;
+    font-weight: 400;
     text-overflow: ellipsis;
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
-    line-height: 1.5em;
-    max-height: 3em;
-    font-size: 1em;
-    color: #4d4d4d;
-    margin-bottom: 0.5em;
     word-wrap: break-word;
 }
 .locationAndDate {
+    margin-top: 2px;
     color: #6c6c6c;
-    line-height: .75em;
-    margin-bottom: 0.25em;
-    font-size: 16px;
-    height: 13px;
+    font-size: 12px;
+    font-weight: 500;
+    height: 16px;
+}
+.locationAndDate .tag {
+    background-color: #e9e9e9;
+    margin-right: 8px;
+    padding: 2px 4px;
+    border-radius: 3px;
 }
 
 .pricingAndLink {
@@ -65,8 +74,9 @@
     row-gap: 15px;
 }
 .pricing {
-    color: #21b3fe;
-    font-size: 16px;
+    color: #0FAFFF;
+    font-size: 18px;
+    font-weight: bold;
     height: 24px;
     align-self: flex-start;
     width: 100px;
@@ -75,16 +85,31 @@
     flex: 4;
     flex-direction: row;
 }
+.pricing .month {
+    font-size: 18px;
+    font-weight: bold;
+    color: #0FAFFF;
+}
+.pricing .unit {
+    font-size: 12px;
+    font-weight: regular;
+    color: #0FAFFF;
+    padding-left: 3px;
+    padding-top: 7px;
+}
 
 .hLink {
     align-self: flex-end;
     height: 24px;
-    font-size: 18px;
-    padding-top: 4px;
+    font-size: 12px;
+    padding-top: 18px;
     margin-right: 10px;
-    display: none;
+    display: flex;
+    justify-content: flex-end;
+    flex: 1;
+    color: #0FAFFF;
     .hLinkText {
-        top: -4px;
+        top: -2px;
         left: 5px;
         position: relative;
     }
@@ -94,20 +119,28 @@
 }
 .hLink:hover {
     cursor: pointer;
-    color: #21b3fe;
+}
+.hLink.extralLink {
+    display: none !important;
 }
 
 .popoverContent {
     display: block;
     position: relative;
-    padding-left: 5px;
+    padding: 16px;
+    margin: -12px;
+    background-color: #F5F3F3;
+    border-radius: 7px;
+    font-size: 16px;
+    font-weight: 500;
+    width: 250px;
     .userIcon {
         display: inline-block;
-        font-size: 34px;
+        font-size: 18px;
         position: relative;
-        top: 0px;
-        width: 40px;
-        height: 40px;
+        top: -8px;
+        width: 22px;
+        height: 22px;
         border-radius: 50%;
         border: 1px solid grey;
     }
@@ -115,21 +148,11 @@
         display: inline-block;
         width: calc(100% - 40px);
         padding-left: 20px;
+        font-size: 16px;
     }
 }
 .popoverContent .userIcon span {
     position: relative;
-    top: -15px;
-    left: 2px;
-}
-
-@media screen and (max-width: 1400px) {
-    .hLink {
-        display: flex;
-        justify-content: flex-end;
-        flex: 1;
-    }
-    .hLink.extralLink {
-        display: none !important;
-    }
+    top: -9px;
+    left: 1px;
 }
