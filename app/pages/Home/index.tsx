@@ -33,7 +33,7 @@ const HomePage: React.FC = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`${HAOSHIYOU_REQ_URL}?size=1400`)
+    fetch(`${HAOSHIYOU_REQ_URL}?size=-1`)
     .then(x => x.json()).then((x) => {
       setCachedData(splitListItems(x, 0)[1]);
       const [initialListItems, restListItems] = splitListItems(x, 100);
