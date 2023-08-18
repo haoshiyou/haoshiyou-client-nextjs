@@ -4,6 +4,7 @@ import MapContainer from '@/components/MapContainer';
 import List from '@/components/List';
 import Search from '@/components/Search';
 import Filter from '@/components/Filter';
+import JoinWechat from '@/components/JoinWechat';
 import { ListType } from '@/types';
 import { HAOSHIYOU_REQ_URL } from '@/constants';
 import { UnorderedListOutlined, AimOutlined } from '@ant-design/icons';
@@ -30,6 +31,7 @@ const HomePage: React.FC = () => {
   const [mouseoverId, setMouseoverId] = useState<string>('');
   const [mouseClickedId, setMouseClickedId] = useState<string>('');
   const [toogleLayout, setToogleLayout] = useState<string>('list');
+  const [wechatModalVisibility, setWechatModalVisibility] = useState(true);
 
   useEffect(() => {
     setLoading(true);
@@ -56,6 +58,11 @@ const HomePage: React.FC = () => {
     }
   };
 
+  const onModalClosed = (e: React.MouseEvent<HTMLButtonElement>) => {
+    console.log(e);
+    setWechatModalVisibility(false);
+  };
+
   return (
     <div className={styles.container}> 
       {debugMode && (
@@ -67,6 +74,7 @@ const HomePage: React.FC = () => {
           ---
         </div>
       )}
+      <JoinWechat visible={wechatModalVisibility} onCancel={onModalClosed} /> 
       <div className={styles.actionContainer}>
         <div className={styles.logo}>
           <div className={styles.logoIcon} />

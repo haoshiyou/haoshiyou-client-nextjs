@@ -60,7 +60,6 @@ const Map: React.FC<Props> = (props) => {
             bootstrapURLKeys={{ key: 'AIzaSyBMhjUXTNWE8oMeKFSOojf4FhBbbFRgS10' }}
             defaultCenter={defaultProps.center}
             defaultZoom={defaultProps.zoom}
-            options={{scrollwheel: false, zoomControl: false}}
           >
              {markers}
           </GoogleMapReact>

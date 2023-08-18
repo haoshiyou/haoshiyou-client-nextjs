@@ -132,8 +132,8 @@ const ListItem: React.FC<Props> = (props) => {
             autoAdjustOverflow 
           >
             <div className={styles.hLink} onClick={linkOnclick}>
-              <ContactsOutlined />
-              <span className={styles.hLinkText}>Contact</span>
+              {/* <ContactsOutlined /> */}
+              <span className={styles.hLinkText}>联系方式</span>
             </div>
           </Popover>
         </div>
