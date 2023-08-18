@@ -1,3 +1,7 @@
+.modalContainer {
+    min-height: 600px;
+    overflow-y: auto;
+}
 .wechatIcon {
     display: inline-block;
     width: 110px;

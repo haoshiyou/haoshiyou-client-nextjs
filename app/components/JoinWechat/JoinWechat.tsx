@@ -92,8 +92,10 @@ const JoinWechat: React.FC<Props> = (props) => {
         footer={null}
         onCancel={onCancel}
     >
-        {currIndex === 'intro' && modalContent}
-        {currIndex === 'steps' && stepsContent}
+        <div className={styles.modalContainer}>
+            {currIndex === 'intro' && modalContent}
+            {currIndex === 'steps' && stepsContent}
+        </div>
     </Modal>
   );
 };
