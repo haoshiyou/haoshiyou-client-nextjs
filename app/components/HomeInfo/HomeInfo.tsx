@@ -2,11 +2,11 @@
 import { Skeleton, Image, Drawer } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { LeftOutlined, PhoneOutlined, MailOutlined, WechatOutlined, UserOutlined, CheckSquareOutlined } from '@ant-design/icons';
-import { HAOSHIYOU_REQ_URL } from '@/constants';
+import { HAOSHIYOU_REQ_URL, imgServicePrefix, mockImgMode } from '@/constants';
 import _get from 'lodash/get';
 import GoogleMapReact from 'google-map-react';
 import MapMarker from '@/components/MapMarker';
-import { priceTranslationFn, getDateDiff } from '@/helper';
+import { priceTranslationFn, getDateDiff, randomSetupImg } from '@/helper';
 import cls from 'classnames';
 
 import styles from './HomeInfo.module.css';
@@ -44,7 +44,7 @@ const HomeInfo: React.FC<Props> = (props) => {
   const [mapProps, setMapProps] = useState<MapProps>(defaultProps);
   const title = _get(detailObj, 'title', '--');
   const lastUpdated = _get(detailObj, 'lastUpdated', '--');
-  const imageUrls = _get(detailObj, 'imageIds', []).length > 0 ? _get(detailObj, 'imageIds', []) : mockImgs;
+  const imageUrls = _get(detailObj, 'imageIds', []);
   const location_lat = _get(detailObj, 'location_lat', 0);
   const location_lng = _get(detailObj, 'location_lng', 0);
   const price = _get(detailObj, 'price', '');
@@ -55,11 +55,12 @@ const HomeInfo: React.FC<Props> = (props) => {
   const contactName = _get(detailObj, 'owner.name', '--');
   const contactEmail = _get(detailObj, 'owner.contactEmail', '--');
   const contactPhone = _get(detailObj, 'owner.contactPhone', '--');
-  const imageUrlMapping = (imageId: string) => `http://res.cloudinary.com/xinbenlv/image/upload/c_fill/${imageId}.jpg` || '';
+  const imageUrlMapping = (imageId: string) => `${imgServicePrefix}${imageId}.jpg` || '';
 
   useEffect(() => {
     setLoading(true);
     fetch(`${HAOSHIYOU_REQ_URL}/${uid}`).then(x => x.json()).then((x) => {
+        if (mockImgMode) randomSetupImg(x);
         setDetailObj(x);
         const location_lat = _get(x, 'location_lat', 0);
         const location_lng = _get(x, 'location_lng', 0);

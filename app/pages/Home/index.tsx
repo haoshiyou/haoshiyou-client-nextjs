@@ -6,23 +6,12 @@ import Search from '@/components/Search';
 import Filter from '@/components/Filter';
 import JoinWechat from '@/components/JoinWechat';
 import { ListType } from '@/types';
-import { HAOSHIYOU_REQ_URL } from '@/constants';
+import { HAOSHIYOU_REQ_URL, debugMode, mockImgMode } from '@/constants';
 import { UnorderedListOutlined, AimOutlined } from '@ant-design/icons';
 import _get from 'lodash/get';
+import { splitListItems, randomSetupImg } from '@/helper';
 
 import styles from './index.module.css';
-
-const debugMode = false;
-
-const splitListItems = (listData: ListType[], gap: number) => {
-  const sortedData = listData
-  .sort((pre: ListType, next: ListType) => {
-      const preTime = _get(pre, 'lastUpdated', '');
-      const nextTime = _get(next, 'lastUpdated', '');
-      return new Date(preTime).getTime() < new Date(nextTime).getTime() ? 1 : -1;
-  });
-  return [sortedData.slice(0, gap), sortedData.slice(gap)];
-};
 
 const HomePage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -37,6 +26,7 @@ const HomePage: React.FC = () => {
     setLoading(true);
     fetch(`${HAOSHIYOU_REQ_URL}?size=-1`)
     .then(x => x.json()).then((x) => {
+      if (mockImgMode) x.forEach((x: any) => randomSetupImg(x));
       setCachedData(splitListItems(x, 0)[1]);
       const [initialListItems, restListItems] = splitListItems(x, 100);
       setListData(initialListItems);

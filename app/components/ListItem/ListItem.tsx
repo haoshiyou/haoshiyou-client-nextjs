@@ -2,7 +2,8 @@ import { Popover } from 'antd';
 import React from 'react';
 import _get from 'lodash/get';
 import cls from 'classnames';
-import { priceTranslationFn, getDateDiff } from '@/helper';
+import { priceTranslationFn, getDateDiff, getRandomArbitrary } from '@/helper';
+import { imgServicePrefix } from '@/constants';
 import { UserOutlined, ContactsOutlined } from '@ant-design/icons';
 
 import styles from './ListItem.module.css';
@@ -16,8 +17,6 @@ export interface Props {
     setMouseClickedId: Function;
 }
 
-const mockImg = 'tsltbjpq5zg2ts5kdjce';
-
 const ListItem: React.FC<Props> = (props) => {
   const { list = {}, uid, mouseoverId, setMouseoverId, mouseClickedId, setMouseClickedId } = props;
   const name = _get(list, 'name', '--');
@@ -29,8 +28,9 @@ const ListItem: React.FC<Props> = (props) => {
   const wechatId = _get(list, 'wechatId', '--') || '--';
   const email = _get(list, 'email', '--');
   const lastUpdated = lastUpdatedTime ? getDateDiff(lastUpdatedTime): '--';
-  const imageId = _get(list, 'imageIds[0]', mockImg);
-  const imageUrl = imageId ? `http://res.cloudinary.com/xinbenlv/image/upload/c_fill,g_north,w_400,h_300,g_center/${imageId}.jpg`: '';
+  const imageId = _get(list, 'imageIds[0]', '');
+  
+  const imageUrl = imageId ? `${imgServicePrefix}${imageId}.jpg`: '';
   const isMarkerMouseover = uid === mouseoverId;
   const isMarkerClicked = uid === mouseClickedId;
   const priceMonthly = priceTranslationFn(price).split('/')[0];
