@@ -30,6 +30,11 @@ const defaultProps: MapProps = {
     },
     zoom: 10.4
   };
+const mockImgs = [
+    "tsltbjpq5zg2ts5kdjce",
+    "vj4ueilcvwxnjxplqfqa",
+    "jlchj9zkzxb1mdjhzdft"
+];
 
 const HomeInfo: React.FC<Props> = (props) => {
   const { uid } = props;
@@ -39,7 +44,7 @@ const HomeInfo: React.FC<Props> = (props) => {
   const [mapProps, setMapProps] = useState<MapProps>(defaultProps);
   const title = _get(detailObj, 'title', '--');
   const lastUpdated = _get(detailObj, 'lastUpdated', '--');
-  const imageUrls = _get(detailObj, 'imageIds', []);
+  const imageUrls = _get(detailObj, 'imageIds', mockImgs);
   const location_lat = _get(detailObj, 'location_lat', 0);
   const location_lng = _get(detailObj, 'location_lng', 0);
   const price = _get(detailObj, 'price', '');
