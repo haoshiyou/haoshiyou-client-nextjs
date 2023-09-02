@@ -5,6 +5,7 @@ import List from '@/components/List';
 import Search from '@/components/Search';
 import Filter from '@/components/Filter';
 import JoinWechat from '@/components/JoinWechat';
+import HomePreviewCard from '@/components/HomePreviewCard';
 import { ListType } from '@/types';
 import { HAOSHIYOU_REQ_URL, debugMode, mockImgMode } from '@/constants';
 import { UnorderedListOutlined, AimOutlined } from '@ant-design/icons';
@@ -20,7 +21,7 @@ const HomePage: React.FC = () => {
   const [mouseoverId, setMouseoverId] = useState<string>('');
   const [mouseClickedId, setMouseClickedId] = useState<string>('');
   const [toogleLayout, setToogleLayout] = useState<string>('list');
-  const [wechatModalVisibility, setWechatModalVisibility] = useState(true);
+  const [wechatModalVisibility, setWechatModalVisibility] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -49,7 +50,6 @@ const HomePage: React.FC = () => {
   };
 
   const onModalClosed = (e: React.MouseEvent<HTMLButtonElement>) => {
-    console.log(e);
     setWechatModalVisibility(false);
   };
 
@@ -73,7 +73,7 @@ const HomePage: React.FC = () => {
           </div>
         </div>
         <div className={styles.searchContainer}>
-          <Search name='Search' />
+          <Search name='Search' setWechatModalVisibility={setWechatModalVisibility} />
         </div>    
         <div className={styles.toggleContainer}>
           {toogleLayout === 'list' && <UnorderedListOutlined onClick={() => setToogleLayout('map')} />}
@@ -107,6 +107,9 @@ const HomePage: React.FC = () => {
             mouseClickedId={mouseClickedId}
             setMouseClickedId={setMouseClickedId}
           />
+        </div>
+        <div className={styles.homePreviewCard}>
+          <HomePreviewCard name='HomePreviewCard' />
         </div>
       </div>
     </div>

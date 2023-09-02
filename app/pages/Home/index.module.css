@@ -88,6 +88,15 @@
   z-index: 10000;
 }
 
+.homePreviewCard {
+  position: absolute;
+  bottom: 0;
+  height: 150px;
+  width: 100%;
+  background-color: #009be8;
+  display: none;
+}
+
 @media screen and (max-width: 1400px) {
   .contentContainer {
     grid-template-columns: 1fr 0px;
@@ -103,4 +112,8 @@
     right: -10px;
     top: 30px;
   }
+  .homePreviewCard {
+    display: none;
+  }
 }
+
