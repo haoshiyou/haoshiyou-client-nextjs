@@ -13,7 +13,7 @@ const HomePreviewCard: React.FC<Props> = (props) => {
   const { name } = props;
   return (
     <div className={styles.title}>
-      name
+      {name}
     </div>
   );
 };

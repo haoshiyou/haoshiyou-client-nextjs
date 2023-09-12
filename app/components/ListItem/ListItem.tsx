@@ -21,6 +21,7 @@ const ListItem: React.FC<Props> = (props) => {
   const { list = {}, uid, mouseoverId, setMouseoverId, mouseClickedId, setMouseClickedId } = props;
   const name = _get(list, 'name', '--');
   const content = _get(list, 'content', '--');
+  const title = _get(list, 'title', '--');
   const price = _get(list, 'price', '--');
   const addressCity = _get(list, 'addressCity', '--');
   const lastUpdatedTime = _get(list, 'lastUpdated', '');
@@ -101,8 +102,8 @@ const ListItem: React.FC<Props> = (props) => {
       )}
       </div>
       <div className={styles.gridContainer} onClick={itemOnClick}>
-        <div className={styles.title} title={content}>
-          {content}
+        <div className={styles.title} title={title}>
+          {title}
         </div>
         <div className={styles.locationAndDate}>
           {addressCity && (
