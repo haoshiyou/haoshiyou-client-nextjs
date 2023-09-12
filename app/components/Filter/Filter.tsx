@@ -15,7 +15,7 @@ const Filter: React.FC<Props> = (props) => {
   return (
     <div className={styles.title}>
       <div className={styles.sort}>
-        排序: 
+        Sort: 
         <div className={styles.sortOption}>
           Time
           <div className={styles.fnIcon}>
