@@ -8,7 +8,8 @@ import JoinWechat from '@/components/JoinWechat';
 import HomePreviewCard from '@/components/HomePreviewCard';
 import { ListType } from '@/types';
 import { HAOSHIYOU_REQ_URL, debugMode, mockImgMode } from '@/constants';
-import { UnorderedListOutlined, AimOutlined } from '@ant-design/icons';
+import { UnorderedListOutlined } from '@ant-design/icons';
+import { FiMapPin } from 'react-icons/fi';
 import _get from 'lodash/get';
 import { splitListItems, randomSetupImg } from '@/helper';
 
@@ -77,7 +78,12 @@ const HomePage: React.FC = () => {
         </div>    
         <div className={styles.toggleContainer}>
           {toogleLayout === 'list' && <UnorderedListOutlined onClick={() => setToogleLayout('map')} />}
-          {toogleLayout === 'map' && <AimOutlined onClick={() => setToogleLayout('list')} />}
+          {toogleLayout === 'map' && (
+           <span className={styles.iconMap}>
+            <FiMapPin onClick={() => setToogleLayout('list')} />
+           </span> 
+          )
+        }
         </div>
       </div>
         
@@ -95,6 +101,7 @@ const HomePage: React.FC = () => {
             mouseClickedId={mouseClickedId}
             setMouseClickedId={setMouseClickedId}
             onScrollBottom={onScrollBottom}
+            setWechatModalVisibility={setWechatModalVisibility}
           />
         </div>
         <div className={styles.mapContainer}>

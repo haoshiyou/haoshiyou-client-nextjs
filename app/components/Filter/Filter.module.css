@@ -10,7 +10,8 @@
   display: inline-block;
   width: 140px;
   font-size: 15px;
-  padding-left: 10px;
+  padding-left: 20px;
+  font-weight: 400;
   cursor: pointer;
 }
 .sort:hover {

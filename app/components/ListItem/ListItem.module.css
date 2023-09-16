@@ -74,7 +74,7 @@
     row-gap: 15px;
 }
 .pricing {
-    color: #0FAFFF;
+    color: #009be8;
     font-size: 18px;
     font-weight: bold;
     height: 24px;
@@ -88,12 +88,12 @@
 .pricing .month {
     font-size: 18px;
     font-weight: bold;
-    color: #0FAFFF;
+    color: #009be8;
 }
 .pricing .unit {
     font-size: 12px;
     font-weight: regular;
-    color: #0FAFFF;
+    color: #009be8;
     padding-left: 3px;
     padding-top: 7px;
 }
@@ -107,7 +107,7 @@
     display: flex;
     justify-content: flex-end;
     flex: 1;
-    color: #0FAFFF;
+    color: #009be8;
     .hLinkText {
         top: -2px;
         left: 5px;
@@ -128,32 +128,51 @@
 .popoverContent {
     display: block;
     position: relative;
-    padding: 16px;
+    padding: 18px;
     margin: -12px;
     background-color: #F5F3F3;
     border-radius: 7px;
     font-size: 16px;
     font-weight: 500;
-    width: 250px;
+    width: 360px;
     .userIcon {
         display: inline-block;
-        font-size: 18px;
+        font-size: 24px;
         position: relative;
-        top: -8px;
-        width: 22px;
-        height: 22px;
+        top: 6px;
+        width: 30px;
+        height: 30px;
         border-radius: 50%;
         border: 1px solid grey;
     }
     .contact {
         display: inline-block;
         width: calc(100% - 40px);
-        padding-left: 20px;
+        padding-left: 30px;
         font-size: 16px;
     }
 }
 .popoverContent .userIcon span {
     position: relative;
-    top: -9px;
-    left: 1px;
+    top: -10px;
+    left: 2px;
+}
+.contactLine {
+    font-size: 16px;
+}
+.contactLine .title {
+    font-size: 16px;
+    display: inline-block;
+    float: left;
+}
+.contactLine .text {
+    font-size: 12px;
+    display: inline-block;
+    float: left;
+    padding-top: 4px;
+}
+.contactLine .qrCode {
+    font-size: 20px;
+    display: inline-block;
+    float: left;
 }

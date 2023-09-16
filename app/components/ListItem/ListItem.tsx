@@ -5,6 +5,7 @@ import cls from 'classnames';
 import { priceTranslationFn, getDateDiff, getRandomArbitrary } from '@/helper';
 import { imgServicePrefix } from '@/constants';
 import { UserOutlined, ContactsOutlined } from '@ant-design/icons';
+import { BsQrCode } from 'react-icons/bs';
 
 import styles from './ListItem.module.css';
 
@@ -15,17 +16,18 @@ export interface Props {
     setMouseoverId: Function;
     mouseClickedId: string;
     setMouseClickedId: Function;
+    setWechatModalVisibility: Function;
 }
 
 const ListItem: React.FC<Props> = (props) => {
-  const { list = {}, uid, mouseoverId, setMouseoverId, mouseClickedId, setMouseClickedId } = props;
+  const { list = {}, uid, mouseoverId, setMouseoverId, mouseClickedId, setMouseClickedId, setWechatModalVisibility } = props;
   const name = _get(list, 'name', '--');
   const content = _get(list, 'content', '--');
   const title = _get(list, 'title', '--');
   const price = _get(list, 'price', '--');
   const addressCity = _get(list, 'addressCity', '--');
   const lastUpdatedTime = _get(list, 'lastUpdated', '');
-  const ownerId = _get(list, 'ownerId', '');
+  const hsyGroupNick = _get(list, 'hsyGroupNick', '');
   const wechatId = _get(list, 'wechatId', '--') || '--';
   const email = _get(list, 'email', '--');
   const lastUpdated = lastUpdatedTime ? getDateDiff(lastUpdatedTime): '--';
@@ -78,6 +80,19 @@ const ListItem: React.FC<Props> = (props) => {
         </div>
         <div className={styles.contactLine}>
           Email: {email}
+        </div>
+        {/* <div className={styles.contactLine}>
+          <span className={styles.qrCode}>
+            <BsQrCode />
+          </span>
+        </div> */}
+        <div className={styles.contactLine} onClick={() => setWechatModalVisibility(true)}>
+          <span className={styles.title}>
+            From:
+          </span>
+          <span className={styles.text}>
+            {hsyGroupNick} 
+          </span>
         </div>
       </div>
     </div>
@@ -133,6 +148,7 @@ const ListItem: React.FC<Props> = (props) => {
             content={popoverContent} 
             destroyTooltipOnHide 
             autoAdjustOverflow 
+            zIndex={1000}
           >
             <div className={styles.hLink} onClick={linkOnclick}>
               {/* <ContactsOutlined /> */}

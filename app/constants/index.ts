@@ -5,7 +5,7 @@ export const HAOSHIYOU_REQ_URL = 'https://haoshiyou-api-server-8defc966b222.hero
 // https://haoshiyou-api-server-8defc966b222.herokuapp.com/api/v1/listing?page=0&size=-1
 
 export const debugMode = false;
-export const mockImgMode = true;
+export const mockImgMode = false;
 
 export const imgServicePrefix = 'http://res.cloudinary.com/xinbenlv/image/upload/c_fill,g_north,w_400,h_300,g_center/';
 

@@ -17,6 +17,7 @@ interface Props {
   mouseClickedId: string;
   setMouseClickedId: Function;
   onScrollBottom: Function;
+  setWechatModalVisibility: Function;
 }
 
 const isBottomFn = (ele: HTMLDivElement): boolean => {
@@ -24,7 +25,7 @@ const isBottomFn = (ele: HTMLDivElement): boolean => {
 };
 
 const List: React.FC<Props> = (props) => {
-  const { name, loading, listData, mouseoverId, setMouseoverId, mouseClickedId, setMouseClickedId, onScrollBottom } = props;
+  const { name, loading, listData, mouseoverId, setMouseoverId, mouseClickedId, setMouseClickedId, onScrollBottom, setWechatModalVisibility } = props;
   const scrollListRef = useRef<any>();
   const listItems = listData.map((each: ListType) => {
     const uid = _get(each, 'uid', '--');
@@ -37,6 +38,7 @@ const List: React.FC<Props> = (props) => {
         setMouseoverId={setMouseoverId}
         mouseClickedId={mouseClickedId}
         setMouseClickedId={setMouseClickedId}
+        setWechatModalVisibility={setWechatModalVisibility}
       />
     )
   });

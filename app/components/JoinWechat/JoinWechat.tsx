@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, Button } from 'antd';
 import { SortAscendingOutlined, FilterOutlined, DownOutlined } from '@ant-design/icons';
 import cls from 'classnames';
@@ -15,13 +15,18 @@ interface Props {
 }
 
 const JoinWechat: React.FC<Props> = (props) => {
-    const { visible, onCancel = () => {} } = props;
+    const { visible = false, onCancel = () => {} } = props;
     const [currIndex, setCurrentIndex] = useState('intro');
     const modalTitle = (
         <div className={styles.modalTitle}>
             加好室友微信群
         </div>
     );
+    useEffect(() => {
+        if (visible) {
+            setCurrentIndex('intro');
+        }
+    }, [visible]);
 
     const stepsContent = (
         <>
@@ -91,6 +96,7 @@ const JoinWechat: React.FC<Props> = (props) => {
         width={600}
         footer={null}
         onCancel={onCancel}
+        zIndex={2000}
     >
         <div className={styles.modalContainer}>
             {currIndex === 'intro' && modalContent}
