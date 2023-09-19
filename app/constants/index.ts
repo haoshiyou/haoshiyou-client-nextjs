@@ -8,6 +8,7 @@ export const debugMode = false;
 export const mockImgMode = false;
 
 export const imgServicePrefix = 'https://res.cloudinary.com/xinbenlv/image/upload/c_fill,g_north,w_400,h_300,g_center/';
+export const imgServiceDetailPrefix = 'https://res.cloudinary.com/xinbenlv/image/upload/';
 
 export const mockImgs = [
     "af7g1wfcmv2e6lefswtk",

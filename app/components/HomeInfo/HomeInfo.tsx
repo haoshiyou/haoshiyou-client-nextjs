@@ -2,7 +2,7 @@
 import { Skeleton, Image, Drawer } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { LeftOutlined, PhoneOutlined, MailOutlined, WechatOutlined, UserOutlined, CheckSquareOutlined } from '@ant-design/icons';
-import { HAOSHIYOU_REQ_URL, imgServicePrefix, mockImgMode } from '@/constants';
+import { HAOSHIYOU_REQ_URL, imgServiceDetailPrefix, mockImgMode } from '@/constants';
 import _get from 'lodash/get';
 import GoogleMapReact from 'google-map-react';
 import MapMarker from '@/components/MapMarker';
@@ -55,7 +55,7 @@ const HomeInfo: React.FC<Props> = (props) => {
   const contactName = _get(detailObj, 'owner.name', '--');
   const contactEmail = _get(detailObj, 'owner.contactEmail', '--');
   const contactPhone = _get(detailObj, 'owner.contactPhone', '--');
-  const imageUrlMapping = (imageId: string) => `${imgServicePrefix}${imageId}.jpg` || '';
+  const imageUrlMapping = (imageId: string) => `${imgServiceDetailPrefix}${imageId}.jpg` || '';
 
   useEffect(() => {
     setLoading(true);
