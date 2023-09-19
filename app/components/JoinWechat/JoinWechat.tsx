@@ -16,7 +16,7 @@ interface Props {
 
 const JoinWechat: React.FC<Props> = (props) => {
     const { visible = false, onCancel = () => {} } = props;
-    const [currIndex, setCurrentIndex] = useState('intro');
+    const [currIndex, setCurrentIndex] = useState('steps');
     const modalTitle = (
         <div className={styles.modalTitle}>
             加好室友微信群
@@ -24,7 +24,7 @@ const JoinWechat: React.FC<Props> = (props) => {
     );
     useEffect(() => {
         if (visible) {
-            setCurrentIndex('intro');
+            setCurrentIndex('steps');
         }
     }, [visible]);
 
