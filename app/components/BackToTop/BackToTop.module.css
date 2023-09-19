@@ -3,12 +3,8 @@
     position: fixed;
     bottom: 0;
     right: 0;
-    font-size: 30px;
-    background-color: aliceblue;
-    border: 0.5px solid lightgrey;
-    border-radius: 3px;
-}
-.title:hover {
-    cursor: pointer;
-    background-color: lightslategrey;
+    font-size: 40px;
+    background-color: #f5f3f3;
+    border: 1px solid #6c6c6c;
+    border-radius: 4px;
 }

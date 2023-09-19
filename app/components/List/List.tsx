@@ -35,7 +35,7 @@ const List: React.FC<Props> = (props) => {
       if(isNotScrollable) {
         return;
       }
-      markScrollEndFn = () => {
+      markScrollEndFn = _debounce(() => {
         if(ele) {
           const isEnd = ele.scrollHeight - Math.round(ele.scrollTop) <= ele.clientHeight;
           if(isEnd) {
@@ -45,7 +45,7 @@ const List: React.FC<Props> = (props) => {
             }
           }
         }
-      };
+      }, 600);
       ele.addEventListener('scroll', markScrollEndFn);
     }
     return () => {

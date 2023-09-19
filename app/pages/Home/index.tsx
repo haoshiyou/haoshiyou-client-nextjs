@@ -38,6 +38,8 @@ const HomePage: React.FC = () => {
   const onScrollBottom = (uid: string) => {
     const idx = cachedData.findIndex((each: ListType) => each?.uid === uid);
     let newListItems = [];
+    console.log(idx, uid);
+    
     if (idx) {
       if (idx > 50) {
         const startIdx = Math.max(0, idx - 50);
