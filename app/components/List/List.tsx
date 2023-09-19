@@ -27,6 +27,33 @@ const isBottomFn = (ele: HTMLDivElement): boolean => {
 const List: React.FC<Props> = (props) => {
   const { name, loading, listData, mouseoverId, setMouseoverId, mouseClickedId, setMouseClickedId, onScrollBottom, setWechatModalVisibility } = props;
   const scrollListRef = useRef<any>();
+  useEffect(() => {
+    let markScrollEndFn = () => {};
+    const ele = scrollListRef.current;
+    if (ele) {
+      const isNotScrollable = ele.scrollHeight === ele.clientHeight;
+      if(isNotScrollable) {
+        return;
+      }
+      markScrollEndFn = () => {
+        if(ele) {
+          const isEnd = ele.scrollHeight - Math.round(ele.scrollTop) <= ele.clientHeight;
+          if(isEnd) {
+            const lastItemId = _get(listData, `${listData.length - 1}.uid`, '');
+            if(lastItemId) {
+              onScrollBottom(lastItemId);  
+            }
+          }
+        }
+      };
+      ele.addEventListener('scroll', markScrollEndFn);
+    }
+    return () => {
+      if (ele) {
+        ele.removeEventListener('scroll', markScrollEndFn);
+      }
+    }
+  });
   const listItems = listData.map((each: ListType) => {
     const uid = _get(each, 'uid', '--');
     return (
@@ -46,22 +73,6 @@ const List: React.FC<Props> = (props) => {
     e.preventDefault();
     setMouseoverId('');
   }
-  const onscrolling = _debounce((e: any) => {
-    const { clientY, pageY, target } = e;
-    if (scrollListRef.current) {
-      const listId = e.target?.parentElement?.parentElement?.getAttribute('list-uid')
-      || e.target?.parentElement?.getAttribute('list-uid') 
-      || e.target?.getAttribute('list-uid');
-      
-      if (listId) {
-        onScrollBottom(listId);
-      }
-      // const isBottom = isBottomFn(scrollListRef.current);
-      // if (isBottom) {
-      //   onScrollBottom();
-      // }
-    }
-  }, 100);
 
   return (
     <div className={styles.container}>
@@ -70,7 +81,6 @@ const List: React.FC<Props> = (props) => {
         <div
           className={styles.listContainer}
           onMouseLeave={onListLeave}
-          onWheel={onscrolling}
           ref={scrollListRef}
           >
           {listItems}
