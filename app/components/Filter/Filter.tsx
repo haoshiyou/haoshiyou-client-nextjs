@@ -1,37 +1,66 @@
 'use client'
 import React from 'react';
-import { SortAscendingOutlined, FilterOutlined, DownOutlined } from '@ant-design/icons';
+import { TbArrowsSort } from 'react-icons/tb';
+import { IoOptionsOutline } from 'react-icons/io5';
 
 import styles from './Filter.module.css';
 
 interface Props {
-  name: string;
+  toogleLayout: string;
 }
 
-const filterConditionVisible = false;
+const filterConditionVisible = true;
 
 const Filter: React.FC<Props> = (props) => {
-  const { name } = props;
-  return (
+  const { toogleLayout } = props;
+
+  const listLayout = (
     <div className={styles.title}>
       <div className={styles.sort}>
-        Sort: 
+        排序 
         <div className={styles.sortOption}>
-          Time
           <div className={styles.fnIcon}>
-            <DownOutlined />
+            <TbArrowsSort />
           </div>
         </div>
       </div>
       {filterConditionVisible && (
         <div className={styles.condition}>
-        筛选条件 
+        筛选条件&nbsp;
         <div className={styles.fnIcon}>
-          <FilterOutlined />
+          <IoOptionsOutline />
         </div>
       </div>
       )}
     </div>
+  );
+
+  const mapLayout = (
+    <div className={styles.mapFilter}>
+      <div className={styles.sort}>
+        排序 
+        <div className={styles.sortOption}>
+          <div className={styles.fnIcon}>
+            <TbArrowsSort />
+          </div>
+        </div>
+      </div>
+      {filterConditionVisible && (
+        <div className={styles.condition}>
+        筛选条件&nbsp;
+        <div className={styles.fnIcon}>
+          <IoOptionsOutline />
+        </div>
+      </div>
+      )}
+    </div>
+  );
+
+  return (
+    <>
+      {toogleLayout === 'list' && listLayout}
+      {toogleLayout === 'map' && mapLayout}
+    </>
   );
 };
 

@@ -97,6 +97,11 @@
   display: none;
 }
 
+.iconMap {
+  top: 0px;
+  position: relative;
+}
+
 @media screen and (max-width: 1400px) {
   .contentContainer {
     grid-template-columns: 1fr 0px;
@@ -110,14 +115,9 @@
     z-index: 2;
     position: absolute;
     right: -10px;
-    top: 30px;
+    top: 38px;
   }
   .homePreviewCard {
     display: none;
   }
-}
-
-.iconMap {
-  top: 6px;
-  position: relative;
 }

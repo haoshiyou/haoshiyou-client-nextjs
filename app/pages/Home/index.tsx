@@ -8,8 +8,8 @@ import JoinWechat from '@/components/JoinWechat';
 import HomePreviewCard from '@/components/HomePreviewCard';
 import { ListType } from '@/types';
 import { HAOSHIYOU_REQ_URL, debugMode, mockImgMode } from '@/constants';
-import { UnorderedListOutlined } from '@ant-design/icons';
-import { FiMapPin } from 'react-icons/fi';
+import { IoMapOutline } from 'react-icons/io5';
+import { LuMapPin } from 'react-icons/lu';
 import _get from 'lodash/get';
 import { splitListItems, randomSetupImg } from '@/helper';
 
@@ -65,6 +65,9 @@ const HomePage: React.FC = () => {
           ---
         </div>
       )}
+      {toogleLayout === 'map' && (
+            <Filter toogleLayout={toogleLayout} />
+      )}
       <JoinWechat visible={wechatModalVisibility} onCancel={onModalClosed} /> 
       <div className={styles.actionContainer}>
         <div className={styles.logo}>
@@ -77,21 +80,22 @@ const HomePage: React.FC = () => {
           <Search name='Search' setWechatModalVisibility={setWechatModalVisibility} />
         </div>    
         <div className={styles.toggleContainer}>
-          {toogleLayout === 'list' && <UnorderedListOutlined onClick={() => setToogleLayout('map')} />}
-          {toogleLayout === 'map' && (
+          {toogleLayout === 'map' && <IoMapOutline onClick={() => setToogleLayout('list')} />}
+          {toogleLayout === 'list' && (
            <span className={styles.iconMap}>
-            <FiMapPin onClick={() => setToogleLayout('list')} />
+            <LuMapPin onClick={() => setToogleLayout('map')} />
            </span> 
           )
         }
         </div>
       </div>
-        
       <div className={styles.contentContainer}>
         <div className={styles.listContainer} style={{display: toogleLayout === 'list' ? 'grid' : 'none'}}>
-          <div className={styles.filterContainer}>
-            <Filter name='Filter' />
-          </div>
+          {toogleLayout === 'list' && (
+            <div className={styles.filterContainer}>
+              <Filter toogleLayout={toogleLayout} />
+            </div>
+          )}
           <List 
             name='List'
             loading={loading} 
