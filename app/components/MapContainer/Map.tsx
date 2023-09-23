@@ -50,6 +50,13 @@ const Map: React.FC<Props> = (props) => {
     e.preventDefault();
     setMouseoverId('');
   }
+
+  const createMapOptions = () => {
+    return {
+      fullscreenControl: false,
+      scrollwheel: false,
+    };
+  };
   
   return (
     <div className={styles.container}>
@@ -60,6 +67,7 @@ const Map: React.FC<Props> = (props) => {
             bootstrapURLKeys={{ key: 'AIzaSyBMhjUXTNWE8oMeKFSOojf4FhBbbFRgS10' }}
             defaultCenter={defaultProps.center}
             defaultZoom={defaultProps.zoom}
+            options={createMapOptions}
           >
              {markers}
           </GoogleMapReact>

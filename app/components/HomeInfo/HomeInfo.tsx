@@ -109,6 +109,13 @@ const HomeInfo: React.FC<Props> = (props) => {
     setContactDrawerVisibility(true);
   };
 
+  const createMapOptions = () => {
+    return {
+      fullscreenControl: false,
+      scrollwheel: false,
+    };
+  };
+
   return (
     <div className={styles.container}>
         {loading && <Skeleton active paragraph={{ rows: 30 }} />}
@@ -144,6 +151,7 @@ const HomeInfo: React.FC<Props> = (props) => {
                         bootstrapURLKeys={{ key: 'AIzaSyBMhjUXTNWE8oMeKFSOojf4FhBbbFRgS10' }}
                         defaultCenter={mapProps.center}
                         defaultZoom={mapProps.zoom}
+                        options={createMapOptions}
                     >
                         <MapMarker
                             text={title}
