@@ -115,6 +115,9 @@
         font-size: 12px;
         width: 50px;
         height: 10px;
+        -webkit-user-select: none; /* Safari */
+        -ms-user-select: none; /* IE 10 and IE 11 */
+        user-select: none; /* Standard syntax */
     }
 }
 .hLink.clicked {
