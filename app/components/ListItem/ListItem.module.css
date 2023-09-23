@@ -128,7 +128,7 @@
 .popoverContent {
     display: block;
     position: relative;
-    padding: 18px;
+    padding: 18px 0px 18px 18px;
     margin: -12px;
     background-color: #F5F3F3;
     border-radius: 7px;
@@ -175,4 +175,22 @@
     font-size: 20px;
     display: inline-block;
     float: left;
+}
+
+.groupText {
+    display: inline-block;
+    float: left;
+    position: relative;
+    color: #009be8;
+}
+
+.exLink {
+    display: inline-block;
+    float: left;
+    position: relative;
+    padding-left: 3px;
+    padding-top: 3px;
+    font-size: 16px;
+    top: -3px;
+    color: #009be8;
 }

@@ -1,10 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Layout, Row, Typography, Skeleton } from 'antd';
+import { Popover, Skeleton } from 'antd';
 import _get from 'lodash/get';
 import _debounce from 'lodash/debounce';
 import ListItem from '@/components/ListItem';
 import BackToTop from '@/components/BackToTop';
 import { ListType } from '@/types';
+import { UserOutlined, ContactsOutlined } from '@ant-design/icons';
+import { GoLinkExternal } from 'react-icons/go';
 
 import styles from './List.module.css';
 
@@ -25,8 +27,18 @@ const isBottomFn = (ele: HTMLDivElement): boolean => {
 };
 
 const List: React.FC<Props> = (props) => {
-  const { name, loading, listData, mouseoverId, setMouseoverId, mouseClickedId, setMouseClickedId, onScrollBottom, setWechatModalVisibility } = props;
+  const { loading, listData, mouseoverId, setMouseoverId, mouseClickedId, setMouseClickedId, onScrollBottom, setWechatModalVisibility } = props;
   const scrollListRef = useRef<any>();
+  const [popoverSelectItem, setPopoverSelectItem] = useState({});
+  const [contactPopoverVisibility, setContactPopoverVisibility] = useState(false);
+  const [popoverLeft, setPopoverLeft] = useState(0);
+  const [popoverTop, setPopoverTop] = useState(0);
+
+  const resetPopover = () => {
+    setContactPopoverVisibility(false);
+    setPopoverSelectItem({});
+  };
+
   useEffect(() => {
     let markScrollEndFn = () => {};
     const ele = scrollListRef.current;
@@ -54,6 +66,96 @@ const List: React.FC<Props> = (props) => {
       }
     }
   });
+
+  useEffect(() => {
+    const ele = scrollListRef.current;
+    if (ele) {
+      ele.addEventListener('scroll', resetPopover);
+    }
+    return () => {
+      if (ele) {
+        ele.removeEventListener('scroll', resetPopover);
+      }
+    }
+  });
+
+  const popoverOnClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const popoverContent = (item: any) => {
+    const hsyGroupNick = _get(item, 'hsyGroupNick', '');
+    const wechatId = _get(item, 'wechatId', '--') || '--';
+    const email = _get(item, 'email', '--');
+    return (
+      <div className={styles.popoverContent} onClick={popoverOnClick}>
+        <div className={styles.userIcon}>
+          <UserOutlined />
+        </div>
+        <div className={styles.contact}>
+          <div className={styles.contactLine}>
+            WeChat: {wechatId}
+          </div>
+          <div className={styles.contactLine}>
+            Email: {email}
+          </div>
+          <div className={styles.contactLine} onClick={() => setWechatModalVisibility(true)}>
+            <span className={styles.title}>
+              From:
+            </span>
+            <span className={styles.text}>
+              <span className={styles.groupText}>
+                {hsyGroupNick} 
+              </span>
+              <span className={styles.exLink}>
+                <GoLinkExternal />
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const linkOnclick = (x: any) => (e: any) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const prevId = _get(popoverSelectItem, 'uid', '');
+    if (prevId === x.uid && prevId !== '') {
+      resetPopover();
+      return;
+    } 
+    let ele = e.target;
+    const clsNames = e.target.className;
+    if (clsNames.includes('hLinkText')) {
+      ele = ele.parentElement;
+    }
+    const position = ele.getBoundingClientRect() || {};
+    const left = _get(position, 'left', 0);
+    const top = _get(position, 'top', 0);
+    setPopoverLeft(left);
+    setPopoverTop(top + 20);
+    const result = listData.find(({ uid }) => uid === x.uid) || {};
+    setPopoverSelectItem(result);
+    setContactPopoverVisibility(true);
+  };
+
+  const popoverEle = (
+    <div style={{ position: 'fixed', left: popoverLeft, top: popoverTop }}>
+      <Popover 
+        placement='bottom' 
+        trigger='click' 
+        content={popoverContent(popoverSelectItem)} 
+        destroyTooltipOnHide 
+        autoAdjustOverflow 
+        zIndex={1000}
+        open={contactPopoverVisibility}
+      >
+      </Popover>
+    </div>
+  );
+
   const listItems = listData.map((each: ListType) => {
     const uid = _get(each, 'uid', '--');
     return (
@@ -66,6 +168,9 @@ const List: React.FC<Props> = (props) => {
         mouseClickedId={mouseClickedId}
         setMouseClickedId={setMouseClickedId}
         setWechatModalVisibility={setWechatModalVisibility}
+        linkOnclick={linkOnclick}
+        resetPopover={resetPopover}
+        popoverSelectItem={popoverSelectItem}
       />
     )
   });
@@ -83,6 +188,7 @@ const List: React.FC<Props> = (props) => {
           onMouseLeave={onListLeave}
           ref={scrollListRef}
           >
+          {popoverEle}
           {listItems}
           {/* <BackToTop 
             scrollRef={scrollListRef.current}

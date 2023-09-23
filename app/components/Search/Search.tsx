@@ -12,7 +12,7 @@ interface Props {
 }
 
 const Search: React.FC<Props> = (props) => {
-  const { name, setWechatModalVisibility } = props;
+  const { setWechatModalVisibility } = props;
   return (
     <div className={styles.title}>
       <div className={styles.searchBox}>
@@ -24,7 +24,7 @@ const Search: React.FC<Props> = (props) => {
       </div>
       <div className={styles.newHome}>
         <div className={styles.plusIcon}>
-          <IoIosAddCircle /> 
+          <IoIosAddCircle />
         </div>
         <div className={styles.newHomeText} onClick={() => setWechatModalVisibility(true)}>
           发布房源

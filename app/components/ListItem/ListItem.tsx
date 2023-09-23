@@ -1,11 +1,8 @@
-import { Popover } from 'antd';
 import React from 'react';
 import _get from 'lodash/get';
 import cls from 'classnames';
 import { priceTranslationFn, getDateDiff, getRandomArbitrary } from '@/helper';
 import { imgServicePrefix } from '@/constants';
-import { UserOutlined, ContactsOutlined } from '@ant-design/icons';
-import { BsQrCode } from 'react-icons/bs';
 
 import styles from './ListItem.module.css';
 
@@ -17,21 +14,25 @@ export interface Props {
     mouseClickedId: string;
     setMouseClickedId: Function;
     setWechatModalVisibility: Function;
+    linkOnclick: Function;
+    resetPopover: Function;
+    popoverSelectItem: Object;
 }
 
 const ListItem: React.FC<Props> = (props) => {
-  const { list = {}, uid, mouseoverId, setMouseoverId, mouseClickedId, setMouseClickedId, setWechatModalVisibility } = props;
+  const { list = {}, uid, mouseoverId, setMouseoverId, popoverSelectItem,
+    mouseClickedId, setMouseClickedId, setWechatModalVisibility, linkOnclick, resetPopover } = props;
   const name = _get(list, 'name', '--');
   const content = _get(list, 'content', '--');
   const title = _get(list, 'title', '--');
   const price = _get(list, 'price', '--');
   const addressCity = _get(list, 'addressCity', '--');
   const lastUpdatedTime = _get(list, 'lastUpdated', '');
+  const lastUpdated = lastUpdatedTime ? getDateDiff(lastUpdatedTime): '--';
+  const imageId = _get(list, 'imageIds[0]', '');
   const hsyGroupNick = _get(list, 'hsyGroupNick', '');
   const wechatId = _get(list, 'wechatId', '--') || '--';
   const email = _get(list, 'email', '--');
-  const lastUpdated = lastUpdatedTime ? getDateDiff(lastUpdatedTime): '--';
-  const imageId = _get(list, 'imageIds[0]', '');
   
   const imageUrl = imageId ? `${imgServicePrefix}${imageId}.jpg`: '';
   const isMarkerMouseover = uid === mouseoverId;
@@ -55,48 +56,16 @@ const ListItem: React.FC<Props> = (props) => {
         return uid;
     });
   };
-  const linkOnclick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-  };
-  const itemOnClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    window.location.href = `/?id=${uid}`;
-  };
-  const popoverOnClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-  };
 
-  const popoverContent = (
-    <div className={styles.popoverContent} onClick={popoverOnClick}>
-      <div className={styles.userIcon}>
-        <UserOutlined />
-      </div>
-      <div className={styles.contact}>
-        <div className={styles.contactLine}>
-          WeChat: {wechatId}
-        </div>
-        <div className={styles.contactLine}>
-          Email: {email}
-        </div>
-        {/* <div className={styles.contactLine}>
-          <span className={styles.qrCode}>
-            <BsQrCode />
-          </span>
-        </div> */}
-        <div className={styles.contactLine} onClick={() => setWechatModalVisibility(true)}>
-          <span className={styles.title}>
-            From:
-          </span>
-          <span className={styles.text}>
-            {hsyGroupNick} 
-          </span>
-        </div>
-      </div>
-    </div>
-  );
+  const itemOnClick = (e: React.MouseEvent) => {
+    resetPopover();
+    e.preventDefault();
+    e.stopPropagation();
+    const id = _get(popoverSelectItem, 'uid', '');
+    if (!id) {
+      window.location.href = `/?id=${uid}`;
+    }
+  };
 
   return (
     <div 
@@ -142,19 +111,9 @@ const ListItem: React.FC<Props> = (props) => {
                 /{priceUnit}
               </span>)}
           </div>
-          <Popover 
-            placement='bottom' 
-            trigger='click' 
-            content={popoverContent} 
-            destroyTooltipOnHide 
-            autoAdjustOverflow 
-            zIndex={1000}
-          >
-            <div className={styles.hLink} onClick={linkOnclick}>
-              {/* <ContactsOutlined /> */}
-              <span className={styles.hLinkText}>联系方式</span>
-            </div>
-          </Popover>
+          <div className={styles.hLink} onClick={linkOnclick({ uid, email, hsyGroupNick, wechatId })}>
+            <span className={styles.hLinkText}>联系方式</span>
+          </div>
         </div>
       </div>
     </div>
