@@ -120,9 +120,9 @@ const List: React.FC<Props> = (props) => {
 
   const linkOnclick = (x: any) => (e: any) => {
     e.preventDefault();
-    e.stopPropagation();
+    e.stopPropagation();    
     const prevId = _get(popoverSelectItem, 'uid', '');
-    if (prevId === x.uid && prevId !== '') {
+    if ((prevId !== '')) {
       resetPopover();
       return;
     } 
@@ -141,16 +141,16 @@ const List: React.FC<Props> = (props) => {
     setContactPopoverVisibility(true);
   };
 
-  const popoverEle = (
-    <div style={{ position: 'fixed', left: popoverLeft, top: popoverTop }}>
+  const popoverEle = contactPopoverVisibility && (
+    <div className={styles.popoverEle} style={{ position: 'fixed', left: popoverLeft, top: popoverTop }}>
       <Popover 
         placement='bottom' 
-        trigger='click' 
         content={popoverContent(popoverSelectItem)} 
         destroyTooltipOnHide 
         autoAdjustOverflow 
         zIndex={1000}
-        open={contactPopoverVisibility}
+        open
+        defaultOpen
       >
       </Popover>
     </div>
