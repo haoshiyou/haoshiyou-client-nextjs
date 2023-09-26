@@ -8,7 +8,7 @@ import JoinWechat from '@/components/JoinWechat';
 import HomePreviewCard from '@/components/HomePreviewCard';
 import { ListType } from '@/types';
 import { HAOSHIYOU_REQ_URL, debugMode, mockImgMode } from '@/constants';
-import { IoMapOutline } from 'react-icons/io5';
+import { TfiViewListAlt } from 'react-icons/tfi';
 import { LuMapPin } from 'react-icons/lu';
 import _get from 'lodash/get';
 import { splitListItems, randomSetupImg } from '@/helper';
@@ -80,7 +80,7 @@ const HomePage: React.FC = () => {
           <Search name='Search' setWechatModalVisibility={setWechatModalVisibility} />
         </div>    
         <div className={styles.toggleContainer}>
-          {toogleLayout === 'map' && <IoMapOutline onClick={() => setToogleLayout('list')} />}
+          {toogleLayout === 'map' && <TfiViewListAlt onClick={() => setToogleLayout('list')} />}
           {toogleLayout === 'list' && (
            <span className={styles.iconMap}>
             <LuMapPin onClick={() => setToogleLayout('map')} />
