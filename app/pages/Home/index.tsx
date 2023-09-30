@@ -11,7 +11,7 @@ import { HAOSHIYOU_REQ_URL, debugMode, mockImgMode } from '@/constants';
 import { TfiViewListAlt } from 'react-icons/tfi';
 import { LuMapPin } from 'react-icons/lu';
 import _get from 'lodash/get';
-import { splitListItems, randomSetupImg } from '@/helper';
+import { splitListItems, randomSetupImg, aggregatePost } from '@/helper';
 
 import styles from './index.module.css';
 
@@ -23,19 +23,46 @@ const HomePage: React.FC = () => {
   const [mouseClickedId, setMouseClickedId] = useState<string>('');
   const [toogleLayout, setToogleLayout] = useState<string>('list');
   const [wechatModalVisibility, setWechatModalVisibility] = useState(false);
+  const [searchDropdownVisibility, setSearchDropdownVisibility] = useState(false);
+  const [searchFilter, setSearchFilter] = useState({});
+  const [searchStr, setSearchStr] = useState('');
+  const [enableScrollSplit, setEnableScrollSplit] = useState(true);
 
   useEffect(() => {
     setLoading(true);
     fetch(`${HAOSHIYOU_REQ_URL}?size=-1`)
     .then(x => x.json()).then((x) => {
       if (mockImgMode) x.forEach((x: any) => randomSetupImg(x));
+      const filterObj = aggregatePost(x);
+      setSearchFilter(filterObj);
       setCachedData(splitListItems(x, 0)[1]);
       const [initialListItems, restListItems] = splitListItems(x, 100);
       setListData(initialListItems);
       setLoading(false);
     });
-  }, []); 
+  }, []);
+
+  useEffect(() => {
+    if (searchStr === '') {
+      setCachedData(splitListItems(cachedData, 0)[1]);
+      const [initialListItems, restListItems] = splitListItems(cachedData, 100);
+      setListData(initialListItems);
+      setEnableScrollSplit(true);
+      return;
+    }
+    if (cachedData.length > 0) {
+      setEnableScrollSplit(false);
+      const filteredList = cachedData.filter((each) => {
+        const cityStr = _get(each, 'addressCity', '');
+        const zipcodeStr = _get(each, 'addressZipcode', '');
+        return [cityStr.toLowerCase(), zipcodeStr.toLowerCase()].includes(searchStr.toLowerCase());
+      });
+      setListData(filteredList);
+    }
+  }, [searchStr]);
+
   const onScrollBottom = (uid: string) => {
+    if (!enableScrollSplit) return;
     const idx = cachedData.findIndex((each: ListType) => each?.uid === uid);
     let newListItems = [];
     if (idx) {
@@ -77,7 +104,14 @@ const HomePage: React.FC = () => {
           </div>
         </div>
         <div className={styles.searchContainer}>
-          <Search name='Search' setWechatModalVisibility={setWechatModalVisibility} />
+          <Search 
+            name='Search' 
+            setWechatModalVisibility={setWechatModalVisibility} 
+            searchDropdownVisibility={searchDropdownVisibility} 
+            searchFilter={searchFilter}
+            searchStr={searchStr}
+            setSearchStr={setSearchStr}
+          />
         </div>    
         <div className={styles.toggleContainer}>
           {toogleLayout === 'map' && <TfiViewListAlt onClick={() => setToogleLayout('list')} />}

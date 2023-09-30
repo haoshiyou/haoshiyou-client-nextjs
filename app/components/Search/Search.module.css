@@ -46,3 +46,10 @@
   float: left;
   padding-right: 10px;
 }
+
+.autoComplete {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  min-width: 400px;
+}

@@ -70,3 +70,19 @@ export const randomSetupImg = (x: { imageIds: string[]}) => {
     x.imageIds = [ mockImgs[getRandomArbitrary(0, mockImgs.length - 1)]];
   }
 };
+
+export const aggregatePost = (list: Object[]) => {
+  const cityNames = new Set();
+  const zipcodeStrs = new Set();
+  list.forEach((eachL: Object) => {
+    const cityStr = _get(eachL, 'addressCity', '');
+    const zipcodeStr = _get(eachL, 'addressZipcode', '');
+    if (cityStr) {
+      cityNames.add(cityStr);
+    }
+    if (zipcodeStr) {
+      zipcodeStrs.add(zipcodeStr);
+    }
+  });
+  return { city: Array.from(cityNames).sort(), zipcode: Array.from(zipcodeStrs).sort() };
+};
