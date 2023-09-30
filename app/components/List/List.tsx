@@ -81,16 +81,17 @@ const List: React.FC<Props> = (props) => {
     }
   });
 
-  const contactOnClick = (x: Object) => (e: React.MouseEvent) => {
+  const contactInfoOnClick = (x: Object) => (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     const uid = _get(x, 'uid', '');
     if (!uid) return;
     fetch(`${HAOSHIYOU_REQ_URL}/${uid}?isContactInfoMasked=false`).then(x => x.json()).then((detailObj) => {
       const uid = _get(detailObj, 'uid', '--');
-      const contactEmail = _get(detailObj, 'owner.contactEmail', '--');
+      const contactEmail = _get(detailObj, 'owner.contactEmail', '--') || '--';
       const wechatId = _get(detailObj, 'owner.contactWechat', '--') || '--';
-      setPopoverContact({ uid, contactEmail, wechatId });
+      const contactPhone = _get(detailObj, 'owner.contactPhone', '--') || '--';
+      setPopoverContact({ uid, contactEmail, wechatId, contactPhone });
     });
   };
   const hsyGroupOnClick = (e: React.MouseEvent) => {
@@ -103,10 +104,12 @@ const List: React.FC<Props> = (props) => {
     const uid = _get(item, 'uid', '');
     const aUid = _get(popoverContact, 'uid', '');
     const hsyGroupNick = _get(item, 'hsyGroupNick', '');
-    const wechatId = _get(item, 'wechatId', '');
-    const email = _get(item, 'email', '');
+    const wechatId = _get(item, 'owner.contactWechat', '');
+    const email = _get(item, 'owner.contactEmail', '');
+    const phone = _get(item, 'owner.contactPhone', '');
     const alternativeWechatId = uid === aUid ? _get(popoverContact, 'wechatId', '') : '';
     const alternativeEmail = uid === aUid ? _get(popoverContact, 'contactEmail', '') : '';
+    const alternativePhone = uid === aUid ? _get(popoverContact, 'contactPhone', '') : '';
     
     return (
       <div className={styles.popoverContent}>
@@ -114,11 +117,14 @@ const List: React.FC<Props> = (props) => {
           <UserOutlined />
         </div>
         <div className={styles.contact}>
-          <div className={styles.contactLine} onClick={contactOnClick(item)}>
+          <div className={styles.contactLine} onClick={contactInfoOnClick(item)}>
             WeChat: {alternativeWechatId || wechatId || '--'}
           </div>
-          <div className={styles.contactLine} onClick={contactOnClick(item)}>
+          <div className={styles.contactLine} onClick={contactInfoOnClick(item)}>
             Email: {alternativeEmail || email || '--'}
+          </div>
+          <div className={styles.contactLine} onClick={contactInfoOnClick(item)}>
+            Phone: {alternativePhone || phone || '--'}
           </div>
           <div className={styles.contactLine}>
             <span className={styles.title}>

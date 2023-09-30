@@ -56,6 +56,11 @@ const HomeInfo: React.FC<Props> = (props) => {
   const contactEmail = _get(detailObj, 'owner.contactEmail', '--');
   const contactPhone = _get(detailObj, 'owner.contactPhone', '--');
   const imageUrlMapping = (imageId: string) => `${imgServiceDetailPrefix}${imageId}.jpg` || '';
+  const [fetchedContact, setFetchedContact] = useState({});
+  const aUid = _get(fetchedContact, 'uid', '');
+  const alternativeWechatId = uid === aUid ? _get(fetchedContact, 'wechatId', '') : '';
+  const alternativeEmail = uid === aUid ? _get(fetchedContact, 'contactEmail', '') : '';
+  const alternativeContactPhone = uid === aUid ? _get(fetchedContact, 'contactPhone', '') : '';
 
   useEffect(() => {
     setLoading(true);
@@ -114,6 +119,18 @@ const HomeInfo: React.FC<Props> = (props) => {
       fullscreenControl: false,
       scrollwheel: false,
     };
+  };
+  
+  const contactInfoOnClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    fetch(`${HAOSHIYOU_REQ_URL}/${uid}?isContactInfoMasked=false`).then(x => x.json()).then((fetchedDetailObj) => {
+      const fetchedUid = _get(fetchedDetailObj, 'uid', '--');
+      const contactEmail = _get(fetchedDetailObj, 'owner.contactEmail', '--') || '--';
+      const wechatId = _get(fetchedDetailObj, 'owner.contactWechat', '--') || '--';
+      const contactPhone = _get(fetchedDetailObj, 'owner.contactPhone', '--') || '--';
+      setFetchedContact({ uid: fetchedUid, contactEmail, wechatId, contactPhone });
+    });
   };
 
   return (
@@ -200,23 +217,23 @@ const HomeInfo: React.FC<Props> = (props) => {
                         </span>
                         房东: {contactName}     
                     </div>
-                    <div className={styles.contactItem}>
+                    <div className={styles.contactItem} onClick={contactInfoOnClick}>
                         <span className={styles.contactItemIcon}>
                             <MailOutlined />
                         </span>
-                        邮箱: {contactEmail}     
+                        邮箱: {alternativeEmail || contactEmail || '--'}     
                     </div>
-                    <div className={styles.contactItem}>
+                    <div className={styles.contactItem} onClick={contactInfoOnClick}>
                         <span className={styles.contactItemIcon}>
                             <PhoneOutlined />
                         </span>
-                        电话: {contactPhone}     
+                        电话: {alternativeContactPhone || contactPhone || '--'}     
                     </div>
-                    <div className={styles.contactItem}>
+                    <div className={styles.contactItem} onClick={contactInfoOnClick}>
                         <span className={styles.contactItemIcon}>
                             <WechatOutlined />
                         </span>
-                        微信: {wechatId}     
+                        微信: {alternativeWechatId || wechatId || '--'}     
                     </div>
                 </div>
             </div>
