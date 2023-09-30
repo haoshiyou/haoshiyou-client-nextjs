@@ -69,10 +69,10 @@ const Search: React.FC<Props> = (props) => {
 
   const dropdownOnSearch = (x: string) => {
     const city = _get(searchFilter, 'city', []);
-    const filteredCity = city.filter((eachC) => eachC.toLowerCase().includes(x.toLowerCase()));
+    const filteredCity = city.filter((eachC: string) => eachC.toLowerCase().includes(x.toLowerCase()));
     setCityOptions(filteredCity);
     const zipcode = _get(searchFilter, 'zipcode', []);
-    const filteredZipcode = zipcode.filter((eachC) => eachC.toLowerCase().includes(x.toLowerCase()));
+    const filteredZipcode = zipcode.filter((eachC: string) => eachC.toLowerCase().includes(x.toLowerCase()));
     setZipcodeOptions(filteredZipcode);
     setInputSearchStr(x);
   };
