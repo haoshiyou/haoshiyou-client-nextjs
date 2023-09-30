@@ -99,9 +99,9 @@ const HomePage: React.FC = () => {
       <div className={styles.actionContainer}>
         <div className={styles.logo}>
           <div className={styles.logoIcon} />
-          <div className={styles.logoText}>
+          {/* <div className={styles.logoText}>
             好室友
-          </div>
+          </div> */}
         </div>
         <div className={styles.searchContainer}>
           <Search 

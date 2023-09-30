@@ -97,7 +97,8 @@ const Search: React.FC<Props> = (props) => {
             popupClassName="certain-category-search-dropdown"
             options={options}
             size="large"
-            style={{ width: '100%', 'minWidth': '400px' }}
+            placeholder="搜索 城市名， 邮编"
+            style={{ width: '100%', 'minWidth': '200px' }}
             onSearch={dropdownOnSearch}
             onSelect={dropdownOnSelect}
             onClear={dropdownOnClear}

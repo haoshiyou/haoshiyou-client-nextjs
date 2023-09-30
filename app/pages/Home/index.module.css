@@ -13,12 +13,11 @@
   font-size: 36px;
   text-align: right;
   color: #009be8;
-  padding-right: 20px;
 }
 .logo .logoIcon {
   display: inline-block;
   position: relative;
-  left: -30px;
+  left: -20px;
   top: 6px;
   width: 45px;
   height: 45px;
@@ -69,7 +68,7 @@
 .actionContainer {
   display: grid;
   padding-top: 17px;
-  grid-template-columns: 220px auto 0;
+  grid-template-columns: 80px auto 0;
   height: 80px;
   width: 100%;
   float: left;
