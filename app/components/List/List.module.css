@@ -22,6 +22,10 @@
   padding-top: 400px;
 }
 
+.text {
+  height: 24px;
+}
+
 .hLink {
   align-self: flex-end;
   height: 24px;
@@ -85,6 +89,7 @@
 }
 .contactLine {
   font-size: 16px;
+  height: 24px;
 }
 .contactLine .title {
   font-size: 16px;
@@ -107,7 +112,6 @@
   display: inline-block;
   float: left;
   position: relative;
-  color: #009be8;
 }
 
 .exLink {
@@ -118,7 +122,6 @@
   padding-top: 3px;
   font-size: 16px;
   top: -3px;
-  color: #009be8;
 }
 
 .popoverEle {

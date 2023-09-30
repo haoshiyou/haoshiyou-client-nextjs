@@ -51,7 +51,7 @@ const HomeInfo: React.FC<Props> = (props) => {
   const content = _get(detailObj, 'content', '');
   const contentList = content.split('\n');
   const amenityArray = _get(detailObj, 'amenityArray', []).join(',  ');
-  const wechatId = _get(detailObj, 'wechatId', '--') || '--';
+  const wechatId = _get(detailObj, 'owner.contactWechat', '--') || '--';
   const contactName = _get(detailObj, 'owner.name', '--');
   const contactEmail = _get(detailObj, 'owner.contactEmail', '--');
   const contactPhone = _get(detailObj, 'owner.contactPhone', '--');
@@ -139,7 +139,7 @@ const HomeInfo: React.FC<Props> = (props) => {
                         ))}
                     </Image.PreviewGroup>
                 </div>
-                <div className={styles.title}>
+                <div className={styles.title} title={title}>
                     {title}
                 </div>
                 <div className={styles.subTitle}>

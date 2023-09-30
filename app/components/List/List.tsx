@@ -7,6 +7,7 @@ import BackToTop from '@/components/BackToTop';
 import { ListType } from '@/types';
 import { UserOutlined, ContactsOutlined } from '@ant-design/icons';
 import { GoLinkExternal } from 'react-icons/go';
+import { HAOSHIYOU_REQ_URL } from '@/constants';
 
 import styles from './List.module.css';
 
@@ -33,6 +34,7 @@ const List: React.FC<Props> = (props) => {
   const [contactPopoverVisibility, setContactPopoverVisibility] = useState(false);
   const [popoverLeft, setPopoverLeft] = useState(0);
   const [popoverTop, setPopoverTop] = useState(0);
+  const [popoverContact, setPopoverContact] = useState({});
 
   const resetPopover = () => {
     setContactPopoverVisibility(false);
@@ -79,28 +81,46 @@ const List: React.FC<Props> = (props) => {
     }
   });
 
-  const popoverOnClick = (e: React.MouseEvent) => {
+  const contactOnClick = (x: Object) => (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+    const uid = _get(x, 'uid', '');
+    if (!uid) return;
+    fetch(`${HAOSHIYOU_REQ_URL}/${uid}?isContactInfoMasked=false`).then(x => x.json()).then((detailObj) => {
+      const uid = _get(detailObj, 'uid', '--');
+      const contactEmail = _get(detailObj, 'owner.contactEmail', '--');
+      const wechatId = _get(detailObj, 'owner.contactWechat', '--') || '--';
+      setPopoverContact({ uid, contactEmail, wechatId });
+    });
+  };
+  const hsyGroupOnClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setWechatModalVisibility(true);
   };
 
   const popoverContent = (item: any) => {
+    const uid = _get(item, 'uid', '');
+    const aUid = _get(popoverContact, 'uid', '');
     const hsyGroupNick = _get(item, 'hsyGroupNick', '');
-    const wechatId = _get(item, 'wechatId', '--') || '--';
-    const email = _get(item, 'email', '--');
+    const wechatId = _get(item, 'wechatId', '');
+    const email = _get(item, 'email', '');
+    const alternativeWechatId = uid === aUid ? _get(popoverContact, 'wechatId', '') : '';
+    const alternativeEmail = uid === aUid ? _get(popoverContact, 'contactEmail', '') : '';
+    
     return (
-      <div className={styles.popoverContent} onClick={popoverOnClick}>
+      <div className={styles.popoverContent}>
         <div className={styles.userIcon}>
           <UserOutlined />
         </div>
         <div className={styles.contact}>
-          <div className={styles.contactLine}>
-            WeChat: {wechatId}
+          <div className={styles.contactLine} onClick={contactOnClick(item)}>
+            WeChat: {alternativeWechatId || wechatId || '--'}
+          </div>
+          <div className={styles.contactLine} onClick={contactOnClick(item)}>
+            Email: {alternativeEmail || email || '--'}
           </div>
           <div className={styles.contactLine}>
-            Email: {email}
-          </div>
-          <div className={styles.contactLine} onClick={() => setWechatModalVisibility(true)}>
             <span className={styles.title}>
               From:
             </span>
@@ -108,7 +128,7 @@ const List: React.FC<Props> = (props) => {
               <span className={styles.groupText}>
                 {hsyGroupNick} 
               </span>
-              <span className={styles.exLink}>
+              <span className={styles.exLink} onClick={hsyGroupOnClick}>
                 <GoLinkExternal />
               </span>
             </span>
