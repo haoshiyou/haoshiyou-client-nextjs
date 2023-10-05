@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { Input, AutoComplete } from 'antd';
+import { Popup } from 'antd-mobile';
 import { CloseSquareFilled } from '@ant-design/icons';
 import { IoIosAddCircle } from "react-icons/io";
 import { BiSearch } from "react-icons/bi";
@@ -21,6 +22,7 @@ const Search: React.FC<Props> = (props) => {
   const [cityOptions, setCityOptions] = useState([]);
   const [zipcodeOptions, setZipcodeOptions] = useState([]);
   const [inputSearchStr, setInputSearchStr] = useState('');
+  const [visible6, setVisible6] = useState(false);
   
   const renderTitle = (title: string) => (
     <span>

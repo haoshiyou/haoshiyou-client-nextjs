@@ -12,6 +12,7 @@
     "@ant-design/icons": "^5.1.2",
     "@ant-design/pro-components": "^2.4.16",
     "antd": "5.8.3",
+    "antd-mobile": "^5.32.4",
     "autoprefixer": "10.4.14",
     "classnames": "^2.3.2",
     "eslint": "8.44.0",
