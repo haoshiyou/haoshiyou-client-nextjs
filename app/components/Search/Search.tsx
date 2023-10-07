@@ -123,6 +123,9 @@ const Search: React.FC<Props> = (props) => {
       <div className={styles.newHome}>
         <div className={styles.plusIcon} onClick={() => setWechatModalVisibility(true)}>
           <IoIosAddCircle />
+          <span className={styles.newHomeText}>
+            发布
+          </span>
         </div>
       </div>
     </div>

@@ -11,7 +11,7 @@
   display: inline-block;
   position: relative;
   float: left;
-  width: 40px;
+  width: 70px;
   padding-left: 10px;
 }
 .newHome:hover {
@@ -34,16 +34,18 @@
 
 .newHomeText {
   display: inline-block;
-  position: relative;
-  float: left;
-  width: 80px;
+  position: absolute;
+  width: 30px;
+  top: -2px;
+  right: -26px;
   padding-top: 4px;
   color: #0fafff;
+  font-size: 14px;
 }
 
 .searchBox {
   display: inline-block;
-  width: calc(100% - 40px);
+  width: calc(100% - 70px);
   position: relative;
   float: left;
 }

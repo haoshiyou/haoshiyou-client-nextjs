@@ -1,5 +1,6 @@
 'use client'
-import { Skeleton, Image, Drawer } from 'antd';
+import { Skeleton, Drawer } from 'antd';
+import { ImageViewer } from 'antd-mobile';
 import React, { useEffect, useState } from 'react';
 import { LeftOutlined, PhoneOutlined, MailOutlined, WechatOutlined, UserOutlined, CheckSquareOutlined } from '@ant-design/icons';
 import { HAOSHIYOU_REQ_URL, imgServiceDetailPrefix, mockImgMode } from '@/constants';
@@ -61,6 +62,11 @@ const HomeInfo: React.FC<Props> = (props) => {
   const alternativeWechatId = uid === aUid ? _get(fetchedContact, 'wechatId', '') : '';
   const alternativeEmail = uid === aUid ? _get(fetchedContact, 'contactEmail', '') : '';
   const alternativeContactPhone = uid === aUid ? _get(fetchedContact, 'contactPhone', '') : '';
+  const [init, setInit] = useState(0);
+  const imgSrcs = imageUrls.map((eachImg) => imageUrlMapping(eachImg));
+  const displayEmail = alternativeEmail || contactEmail || '--';
+  const displayPhone = alternativeContactPhone || contactPhone || '--';
+  const displayWechat = alternativeWechatId || wechatId || '--';
 
   useEffect(() => {
     setLoading(true);
@@ -97,14 +103,15 @@ const HomeInfo: React.FC<Props> = (props) => {
         open={contactDrawerVisibility}
         key={uid}
         destroyOnClose
-        height={300}
+        height={250}
     >
         <div className={styles.mask}>
             <div className={styles.contactLines}>
-                <div className={styles.contactLine}>contact@gmail.com</div>
-                <div className={styles.contactLine}>发送邮件</div>
-                <div className={styles.contactLine}>拨打电话</div>
-                <div className={styles.contactLine}>复制号码</div>
+                <div className={styles.contactLine}>邮件: {displayEmail}</div>
+                {/* <div className={styles.contactLine}>发送邮件</div> */}
+                <div className={styles.contactLine}>电话: {displayPhone}</div>
+                <div className={styles.contactLine}>Wechat: {displayWechat}</div>
+                {/* <div className={styles.contactLine}>复制号码</div> */}
                 <div className={cls(styles.contactLine, styles.cancel)} onClick={contactDrawerOnClose}>取消</div>
             </div>
         </div>
@@ -133,6 +140,10 @@ const HomeInfo: React.FC<Props> = (props) => {
     });
   };
 
+  const imgOnClose = () => {
+    setInit(0);
+  }
+
   return (
     <div className={styles.container}>
         {loading && <Skeleton active paragraph={{ rows: 30 }} />}
@@ -145,16 +156,25 @@ const HomeInfo: React.FC<Props> = (props) => {
             </div>
             <div className={styles.content}>
                 <div className={styles.image}>
-                    <Image.PreviewGroup>
-                        {imageUrls.map((eachImg) => (
-                            <Image 
-                                key={eachImg}
-                                width={200}
-                                height={200}
-                                src={imageUrlMapping(eachImg)}
+                        {imgSrcs.map((image, index) =>
+                        (<span
+                            key={image}
+                            onClick={() => setInit(index + 1)}
+                            style={{ marginRight: '10px', float: 'left' }}
+                        >
+                            <img width={50}
+                                height={50}
+                                src={image}
+                                alt={image}
                             />
-                        ))}
-                    </Image.PreviewGroup>
+                            </span>)
+                        )}
+                    <ImageViewer.Multi
+                        images={imgSrcs}
+                        visible={!!init}
+                        defaultIndex={1}
+                        onClose={() => setInit(0) }
+                    />
                 </div>
                 <div className={styles.title} title={title}>
                     {title}
@@ -221,19 +241,19 @@ const HomeInfo: React.FC<Props> = (props) => {
                         <span className={styles.contactItemIcon}>
                             <MailOutlined />
                         </span>
-                        邮箱: {alternativeEmail || contactEmail || '--'}     
+                        邮箱: {displayEmail}     
                     </div>
                     <div className={styles.contactItem} onClick={contactInfoOnClick}>
                         <span className={styles.contactItemIcon}>
                             <PhoneOutlined />
                         </span>
-                        电话: {alternativeContactPhone || contactPhone || '--'}     
+                        电话: {displayPhone}     
                     </div>
                     <div className={styles.contactItem} onClick={contactInfoOnClick}>
                         <span className={styles.contactItemIcon}>
                             <WechatOutlined />
                         </span>
-                        微信: {alternativeWechatId || wechatId || '--'}     
+                        微信: {displayWechat}     
                     </div>
                 </div>
             </div>
