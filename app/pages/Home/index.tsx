@@ -28,7 +28,6 @@ const HomePage: React.FC = () => {
   const [searchStr, setSearchStr] = useState('');
   const [enableScrollSplit, setEnableScrollSplit] = useState(true);
   const [scrollDirection, setScrollDirection] = useState('down');
-  console.log(scrollDirection);
   
 
   useEffect(() => {
@@ -141,6 +140,7 @@ const HomePage: React.FC = () => {
             setWechatModalVisibility={setWechatModalVisibility}
             scrollDirection={scrollDirection}
             setScrollDirection={setScrollDirection}
+            searchStr={searchStr}
           />
         </div>
         <div className={styles.mapContainer}>

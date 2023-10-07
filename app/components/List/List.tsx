@@ -24,6 +24,7 @@ interface Props {
   setWechatModalVisibility: Function;
   setScrollDirection: Function;
   scrollDirection: string;
+  searchStr: string;
 }
 
 let currentScrollTop = 0;
@@ -33,7 +34,7 @@ const isBottomFn = (ele: HTMLDivElement): boolean => {
 };
 
 const List: React.FC<Props> = (props) => {
-  const { loading, listData, mouseoverId, setMouseoverId, mouseClickedId,  scrollDirection,
+  const { loading, listData, mouseoverId, setMouseoverId, mouseClickedId,  scrollDirection, searchStr,
     setMouseClickedId, onScrollBottom, setWechatModalVisibility, setScrollDirection } = props;
   const scrollListRef = useRef<any>();
   const [popoverSelectItem, setPopoverSelectItem] = useState({});
@@ -57,7 +58,7 @@ const List: React.FC<Props> = (props) => {
         return;
       }
       markScrollEndFn = _debounce(() => {
-        if(ele) {
+        if(ele && searchStr === '') {
           const isEnd = ele.scrollHeight - Math.round(ele.scrollTop) <= ele.clientHeight;
           if(isEnd) {
             const lastItemId = _get(listData, `${listData.length - 1}.uid`, '');
@@ -67,7 +68,7 @@ const List: React.FC<Props> = (props) => {
           }
           
         }
-      }, 1000);
+      }, 400);
       scrollFilterHandler = () => {
         if (!ele) return;
         if (currentScrollTop <= ele.scrollTop) {
