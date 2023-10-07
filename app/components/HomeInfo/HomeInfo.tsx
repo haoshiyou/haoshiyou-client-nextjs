@@ -159,20 +159,21 @@ const HomeInfo: React.FC<Props> = (props) => {
                         {imgSrcs.map((image, index) =>
                         (<span
                             key={image}
-                            onClick={() => setInit(index + 1)}
                             style={{ marginRight: '10px', float: 'left' }}
                         >
-                            <img width={50}
+                            <img 
+                                width={50}
                                 height={50}
                                 src={image}
                                 alt={image}
+                                onClick={() => setInit(index + 1)}
                             />
                             </span>)
                         )}
                     <ImageViewer.Multi
                         images={imgSrcs}
                         visible={!!init}
-                        defaultIndex={1}
+                        defaultIndex={0}
                         onClose={() => setInit(0) }
                     />
                 </div>
