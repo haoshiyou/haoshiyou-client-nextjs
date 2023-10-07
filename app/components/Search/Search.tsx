@@ -100,13 +100,17 @@ const Search: React.FC<Props> = (props) => {
                 {options.map((each) => {
                   return (
                     <>
-                      <div className={styles.label}>
+                      <div className={styles.label} key={each.label}>
                           {each.label}
                         </div>
                         {
                           each.options.map((eachO) => {
                             return (
-                              <div className={styles.options} onClick={() => dropdownOnSelect(eachO)}>
+                              <div 
+                                key={eachO}
+                                className={styles.options} 
+                                onClick={() => dropdownOnSelect(eachO)}
+                              >
                                 {eachO}
                               </div>
                             )
