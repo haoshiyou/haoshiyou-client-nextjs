@@ -131,7 +131,7 @@ const List: React.FC<Props> = (props) => {
               From:
             </span>
             <span className={styles.text}>
-              <span className={styles.groupText}>
+              <span className={styles.groupText} onClick={hsyGroupOnClick}>
                 {hsyGroupNick} 
               </span>
               <span className={styles.exLink} onClick={hsyGroupOnClick}>
