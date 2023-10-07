@@ -11,6 +11,7 @@ import { HAOSHIYOU_REQ_URL, debugMode, mockImgMode } from '@/constants';
 import { TfiViewListAlt } from 'react-icons/tfi';
 import { LuMapPin } from 'react-icons/lu';
 import _get from 'lodash/get';
+import cls from 'classnames';
 import { splitListItems, randomSetupImg, aggregatePost } from '@/helper';
 
 import styles from './index.module.css';
@@ -26,6 +27,9 @@ const HomePage: React.FC = () => {
   const [searchFilter, setSearchFilter] = useState({});
   const [searchStr, setSearchStr] = useState('');
   const [enableScrollSplit, setEnableScrollSplit] = useState(true);
+  const [scrollDirection, setScrollDirection] = useState('down');
+  console.log(scrollDirection);
+  
 
   useEffect(() => {
     setLoading(true);
@@ -121,7 +125,7 @@ const HomePage: React.FC = () => {
       <div className={styles.contentContainer}>
         <div className={styles.listContainer} style={{display: toogleLayout === 'list' ? 'grid' : 'none'}}>
           {toogleLayout === 'list' && (
-            <div className={styles.filterContainer}>
+            <div className={cls(styles.filterContainer, scrollDirection === 'up' && styles.scrollUp)}>
               <Filter toogleLayout={toogleLayout} />
             </div>
           )}
@@ -135,6 +139,8 @@ const HomePage: React.FC = () => {
             setMouseClickedId={setMouseClickedId}
             onScrollBottom={onScrollBottom}
             setWechatModalVisibility={setWechatModalVisibility}
+            scrollDirection={scrollDirection}
+            setScrollDirection={setScrollDirection}
           />
         </div>
         <div className={styles.mapContainer}>

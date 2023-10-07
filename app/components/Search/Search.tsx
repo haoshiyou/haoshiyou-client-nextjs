@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { SearchBar, Popup } from '@nutui/nutui-react';
 import { IoIosAddCircle } from "react-icons/io";
 import _get from 'lodash/get';
+import { AiOutlineClose } from 'react-icons/ai';
 
 import styles from './Search.module.css';
 
@@ -93,7 +94,7 @@ const Search: React.FC<Props> = (props) => {
                   className={styles.closeBtn}
                   onClick={() => setSearchDropdownVisibility(false)}
                 >
-                  X
+                  <AiOutlineClose />
                 </div>
               </div>
               <div className={styles.searchItemContainer}>

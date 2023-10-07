@@ -3,7 +3,13 @@
   width: 100%;
   height: 100%;
   overflow-y: hidden;
+  padding-top: 40px;
+  transition: padding 0.2s ease-in-out;
 }
+.container.scrollUp {
+  padding-top: 0;
+}
+
 .listContainer {
   position: relative;
   font-size: 16px;

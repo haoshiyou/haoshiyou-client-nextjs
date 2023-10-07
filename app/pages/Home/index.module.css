@@ -38,8 +38,15 @@
 }
 
 .filterContainer {
-  position: relative;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
   background-color: #f5f3f3;
+  transition: top 0.2s ease-in-out;
+}
+.filterContainer.scrollUp {
+  top: -40px;
 }
 
 .toggleContainer {
@@ -71,6 +78,8 @@
   grid-template-columns: 80px auto 0;
   height: 80px;
   width: 100%;
+  z-index: 2;
+  background-color: #ffffff;
   float: left;
 }
 

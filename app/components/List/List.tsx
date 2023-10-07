@@ -7,6 +7,7 @@ import BackToTop from '@/components/BackToTop';
 import { ListType } from '@/types';
 import { UserOutlined, ContactsOutlined } from '@ant-design/icons';
 import { GoLinkExternal } from 'react-icons/go';
+import cls from 'classnames';
 import { HAOSHIYOU_REQ_URL } from '@/constants';
 
 import styles from './List.module.css';
@@ -21,14 +22,19 @@ interface Props {
   setMouseClickedId: Function;
   onScrollBottom: Function;
   setWechatModalVisibility: Function;
+  setScrollDirection: Function;
+  scrollDirection: string;
 }
+
+let currentScrollTop = 0;
 
 const isBottomFn = (ele: HTMLDivElement): boolean => {
   return (ele.scrollHeight - ele.scrollTop) === ele.clientHeight;
 };
 
 const List: React.FC<Props> = (props) => {
-  const { loading, listData, mouseoverId, setMouseoverId, mouseClickedId, setMouseClickedId, onScrollBottom, setWechatModalVisibility } = props;
+  const { loading, listData, mouseoverId, setMouseoverId, mouseClickedId,  scrollDirection,
+    setMouseClickedId, onScrollBottom, setWechatModalVisibility, setScrollDirection } = props;
   const scrollListRef = useRef<any>();
   const [popoverSelectItem, setPopoverSelectItem] = useState({});
   const [contactPopoverVisibility, setContactPopoverVisibility] = useState(false);
@@ -43,6 +49,7 @@ const List: React.FC<Props> = (props) => {
 
   useEffect(() => {
     let markScrollEndFn = () => {};
+    let scrollFilterHandler = () => {};
     const ele = scrollListRef.current;
     if (ele) {
       const isNotScrollable = ele.scrollHeight === ele.clientHeight;
@@ -58,16 +65,29 @@ const List: React.FC<Props> = (props) => {
               onScrollBottom(lastItemId);  
             }
           }
+          
         }
-      }, 600);
+      }, 1000);
+      scrollFilterHandler = () => {
+        if (!ele) return;
+        if (currentScrollTop <= ele.scrollTop) {
+          setScrollDirection('up');
+        } else {
+          setScrollDirection('down');
+        }
+        currentScrollTop = ele.scrollTop;
+      }
       ele.addEventListener('scroll', markScrollEndFn);
+      ele.addEventListener('scroll', scrollFilterHandler);
+      
     }
     return () => {
       if (ele) {
         ele.removeEventListener('scroll', markScrollEndFn);
+        ele.removeEventListener('scroll', scrollFilterHandler);
       }
     }
-  });
+  }, [scrollListRef.current]);
 
   useEffect(() => {
     const ele = scrollListRef.current;
@@ -206,7 +226,7 @@ const List: React.FC<Props> = (props) => {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={cls(styles.container, scrollDirection === 'up' && styles.scrollUp)}>
       {loading && <div className={styles.loading}><Skeleton active /><Skeleton active /></div>}
       {!loading && (
         <div
