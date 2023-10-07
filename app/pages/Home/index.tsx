@@ -23,7 +23,6 @@ const HomePage: React.FC = () => {
   const [mouseClickedId, setMouseClickedId] = useState<string>('');
   const [toogleLayout, setToogleLayout] = useState<string>('list');
   const [wechatModalVisibility, setWechatModalVisibility] = useState(false);
-  const [searchDropdownVisibility, setSearchDropdownVisibility] = useState(false);
   const [searchFilter, setSearchFilter] = useState({});
   const [searchStr, setSearchStr] = useState('');
   const [enableScrollSplit, setEnableScrollSplit] = useState(true);
@@ -99,15 +98,11 @@ const HomePage: React.FC = () => {
       <div className={styles.actionContainer}>
         <div className={styles.logo}>
           <div className={styles.logoIcon} />
-          {/* <div className={styles.logoText}>
-            好室友
-          </div> */}
         </div>
         <div className={styles.searchContainer}>
           <Search 
             name='Search' 
             setWechatModalVisibility={setWechatModalVisibility} 
-            searchDropdownVisibility={searchDropdownVisibility} 
             searchFilter={searchFilter}
             searchStr={searchStr}
             setSearchStr={setSearchStr}

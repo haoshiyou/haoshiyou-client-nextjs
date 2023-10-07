@@ -11,7 +11,8 @@
   display: inline-block;
   position: relative;
   float: left;
-  width: 110px;
+  width: 40px;
+  padding-left: 10px;
 }
 .newHome:hover {
   color: #0FAFFF;
@@ -24,9 +25,10 @@
   width: 30px;
   float: left;
   position: relative;
-  top: 1px;
+  top: 3px;
+  left: 3px;
   padding: 1px 1px 0 0px;
-  font-size: 30px;
+  font-size: 25px;
   color: #0fafff;
 }
 
@@ -41,10 +43,9 @@
 
 .searchBox {
   display: inline-block;
-  width: calc(100% - 110px);
+  width: calc(100% - 40px);
   position: relative;
   float: left;
-  padding-right: 80px;
 }
 
 .autoComplete {
@@ -52,4 +53,71 @@
   position: relative;
   width: 100%;
   min-width: 200px;
+  top: -10px;
 }
+
+.searchDropdown {
+  padding: 20px;
+  background-color: #ffffff;
+  /* background-color: lightblue; */
+  z-index: 2;
+  position: fixed;
+  width: 100vw;
+  left: 0;
+}
+
+.searchDropdown .header {
+  position: relative;
+  width: 100%;
+  height: 20px;
+  top: 3px;
+  z-index: 2;
+}
+
+.searchDropdown .header .closeBtn {
+  display: inline-block;
+    width: 30px;
+    height: 30px;
+    top: -18px;
+    right: -10px;
+    position: absolute;
+    color: rgba(0, 0, 0, 0.45);
+    font-size: 18px;
+    font-weight: 300;
+}
+
+.searchItemContainer .label {
+  display: flex;
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 12px;
+  cursor: default;
+  position: relative;
+  min-height: 32px;
+  padding: 5px 12px;
+  color: rgba(0, 0, 0, 0.88);
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 1.5714285714285714;
+  box-sizing: border-box;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.searchItemContainer .options {
+  display: flex;
+  position: relative;
+  min-height: 32px;
+  padding: 5px 12px;
+  color: rgba(0, 0, 0, 0.88);
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 1.5714285714285714;
+  box-sizing: border-box;
+  cursor: pointer;
+  border-radius: 4px;
+ }
+
+ .searchItemContainer {
+  max-height: calc(100vh - 300px);
+  overflow-y: auto;
+ }

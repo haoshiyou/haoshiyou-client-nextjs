@@ -27,6 +27,7 @@ export async function generateMetadata(
  
   return {
     title: product.title || '好室友™平台',
+    viewport: { width: 390, userScalable: false },
     // openGraph: {
     //   images: ['/some-specific-page-image.jpg', ...previousImages],
     // },

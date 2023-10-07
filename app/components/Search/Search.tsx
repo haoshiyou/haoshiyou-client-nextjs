@@ -1,9 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import { Input, AutoComplete } from 'antd';
-import { Popup } from 'antd-mobile';
-import { CloseSquareFilled } from '@ant-design/icons';
+import React, { useEffect, useState, useRef } from 'react';
+import { SearchBar, Popup } from '@nutui/nutui-react';
 import { IoIosAddCircle } from "react-icons/io";
-import { BiSearch } from "react-icons/bi";
 import _get from 'lodash/get';
 
 import styles from './Search.module.css';
@@ -11,38 +8,18 @@ import styles from './Search.module.css';
 interface Props {
   name: string;
   setWechatModalVisibility: Function;
-  searchDropdownVisibility: boolean;
   searchFilter: Object;
   searchStr: string;
   setSearchStr: Function;
 }
 
 const Search: React.FC<Props> = (props) => {
-  const { setWechatModalVisibility, searchDropdownVisibility, searchFilter, searchStr, setSearchStr } = props;
+  const { setWechatModalVisibility, searchFilter, searchStr, setSearchStr } = props;
   const [cityOptions, setCityOptions] = useState([]);
   const [zipcodeOptions, setZipcodeOptions] = useState([]);
   const [inputSearchStr, setInputSearchStr] = useState('');
-  const [visible6, setVisible6] = useState(false);
-  
-  const renderTitle = (title: string) => (
-    <span>
-      {title}
-    </span>
-  );
-  
-  const renderItem = (title: string, count: number) => ({
-    value: title,
-    label: (
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
-      >
-        {title}
-      </div>
-    ),
-  });
+  const [searchDropdownVisibility, setSearchDropdownVisibility] = useState(false);
+  const containerRef = useRef(null);
 
   const reloadFilters = () => {
     const city = _get(searchFilter, 'city', []);
@@ -58,12 +35,12 @@ const Search: React.FC<Props> = (props) => {
 
   const options = [
     {
-      label: renderTitle('城市'),
-      options: cityOptions.map((eachC: string) => renderItem(eachC, 1)),
+      label: '城市',
+      options: cityOptions,
     },
     {
-      label: renderTitle('邮编'),
-      options: zipcodeOptions.map((eachZ: string) => renderItem(eachZ, 1)),
+      label: '邮编',
+      options: zipcodeOptions,
     },
   ];
   
@@ -83,45 +60,69 @@ const Search: React.FC<Props> = (props) => {
     setSearchStr(x);
     setInputSearchStr(x);
     reloadFilters();
+    setSearchDropdownVisibility(false);
   }
+
   const dropdownOnClear = () => {
     setSearchStr('');
     setInputSearchStr('');
     reloadFilters();
   }
+
+  const searchOnFocusFn = (x: any) => {
+    setSearchDropdownVisibility(true);
+  };
  
   return (
-    <div className={styles.title}>
+    <div className={styles.title} ref={containerRef}>
       <div className={styles.searchBox}>
         <div className={styles.autoComplete}>
-          <AutoComplete
-            value={inputSearchStr}
-            popupClassName="certain-category-search-dropdown"
-            options={options}
-            size="large"
-            placeholder="搜索 城市名， 邮编"
-            style={{ width: '100%', 'minWidth': '200px' }}
-            onSearch={dropdownOnSearch}
-            onSelect={dropdownOnSelect}
+          <SearchBar 
+            placeholder="搜索 城市名， 邮编" 
+            onInputClick={searchOnFocusFn}
+            onChange={dropdownOnSearch}
             onClear={dropdownOnClear}
-            allowClear={{ 
-              clearIcon: <CloseSquareFilled style={{width: '16px', height: '16px', fontSize: '16px', marginLeft: '-3px' }} /> 
-            }}
-          >
-            <Input
-                suffix={
-                  <BiSearch />  
-                }
-              />
-          </AutoComplete>
+            value={inputSearchStr}
+          />
+          {searchDropdownVisibility && (
+            <div className={styles.searchDropdown}>
+              <div 
+                className={styles.header}
+              >
+                <div 
+                  className={styles.closeBtn}
+                  onClick={() => setSearchDropdownVisibility(false)}
+                >
+                  X
+                </div>
+              </div>
+              <div className={styles.searchItemContainer}>
+                {options.map((each) => {
+                  return (
+                    <>
+                      <div className={styles.label}>
+                          {each.label}
+                        </div>
+                        {
+                          each.options.map((eachO) => {
+                            return (
+                              <div className={styles.options} onClick={() => dropdownOnSelect(eachO)}>
+                                {eachO}
+                              </div>
+                            )
+                          })
+                        }
+                    </>
+                  )
+                })}
+              </div>
+            </div>
+          )}
         </div>    
       </div>
       <div className={styles.newHome}>
-        <div className={styles.plusIcon}>
+        <div className={styles.plusIcon} onClick={() => setWechatModalVisibility(true)}>
           <IoIosAddCircle />
-        </div>
-        <div className={styles.newHomeText} onClick={() => setWechatModalVisibility(true)}>
-          发布房源
         </div>
       </div>
     </div>
