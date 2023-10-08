@@ -5,7 +5,7 @@ import _debounce from 'lodash/debounce';
 import ListItem from '@/components/ListItem';
 import BackToTop from '@/components/BackToTop';
 import { ListType } from '@/types';
-import { UserOutlined, ContactsOutlined } from '@ant-design/icons';
+import { UserOutlined } from '@ant-design/icons';
 import { GoLinkExternal } from 'react-icons/go';
 import cls from 'classnames';
 import { HAOSHIYOU_REQ_URL } from '@/constants';
@@ -22,12 +22,9 @@ interface Props {
   setMouseClickedId: Function;
   onScrollBottom: Function;
   setWechatModalVisibility: Function;
-  setScrollDirection: Function;
   scrollDirection: string;
   searchStr: string;
 }
-
-let currentScrollTop = 0;
 
 const isBottomFn = (ele: HTMLDivElement): boolean => {
   return (ele.scrollHeight - ele.scrollTop) === ele.clientHeight;
@@ -35,7 +32,7 @@ const isBottomFn = (ele: HTMLDivElement): boolean => {
 
 const List: React.FC<Props> = (props) => {
   const { loading, listData, mouseoverId, setMouseoverId, mouseClickedId,  scrollDirection, searchStr,
-    setMouseClickedId, onScrollBottom, setWechatModalVisibility, setScrollDirection } = props;
+    setMouseClickedId, setWechatModalVisibility } = props;
   const scrollListRef = useRef<any>();
   const [popoverSelectItem, setPopoverSelectItem] = useState({});
   const [contactPopoverVisibility, setContactPopoverVisibility] = useState(false);
@@ -47,48 +44,6 @@ const List: React.FC<Props> = (props) => {
     setContactPopoverVisibility(false);
     setPopoverSelectItem({});
   };
-
-  useEffect(() => {
-    let markScrollEndFn = () => {};
-    let scrollFilterHandler = () => {};
-    const ele = scrollListRef.current;
-    if (ele) {
-      const isNotScrollable = ele.scrollHeight === ele.clientHeight;
-      if(isNotScrollable) {
-        return;
-      }
-      markScrollEndFn = _debounce(() => {
-        if(ele && searchStr === '') {
-          const isEnd = ele.scrollHeight - Math.round(ele.scrollTop) <= ele.clientHeight;
-          if(isEnd) {
-            const lastItemId = _get(listData, `${listData.length - 1}.uid`, '');
-            if(lastItemId) {
-              onScrollBottom(lastItemId);  
-            }
-          }
-          
-        }
-      }, 400);
-      scrollFilterHandler = () => {
-        if (!ele) return;
-        if (currentScrollTop <= ele.scrollTop) {
-          setScrollDirection('up');
-        } else {
-          setScrollDirection('down');
-        }
-        currentScrollTop = ele.scrollTop;
-      }
-      ele.addEventListener('scroll', markScrollEndFn);
-      ele.addEventListener('scroll', scrollFilterHandler);
-      
-    }
-    return () => {
-      if (ele) {
-        ele.removeEventListener('scroll', markScrollEndFn);
-        ele.removeEventListener('scroll', scrollFilterHandler);
-      }
-    }
-  }, [scrollListRef.current]);
 
   useEffect(() => {
     const ele = scrollListRef.current;

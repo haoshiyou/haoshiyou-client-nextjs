@@ -11,6 +11,7 @@ import { HAOSHIYOU_REQ_URL, debugMode, mockImgMode } from '@/constants';
 import { TfiViewListAlt } from 'react-icons/tfi';
 import { LuMapPin } from 'react-icons/lu';
 import _get from 'lodash/get';
+import _debounce from 'lodash/debounce';
 import cls from 'classnames';
 import { splitListItems, randomSetupImg, aggregatePost } from '@/helper';
 
@@ -31,9 +32,6 @@ const HomePage: React.FC = () => {
   const [enableScrollSplit, setEnableScrollSplit] = useState(true);
   const [scrollDirection, setScrollDirection] = useState('down');
   const scrollRef = useRef<any>();
-  console.log(scrollDirection);
-  
-  
 
   useEffect(() => {
     setLoading(true);
@@ -70,7 +68,28 @@ const HomePage: React.FC = () => {
 
   useEffect(() => {
     const ele = scrollRef.current;
+    if (!ele) return;
     let scrollFilterHandler = () => {};
+    let markScrollEndFn = () => {};
+    const isNotScrollable = ele.scrollHeight === ele.clientHeight;
+    if(isNotScrollable) {
+      return;
+    }
+
+    markScrollEndFn = _debounce(() => {
+      if(searchStr === '') {
+        const isEnd = ele.scrollHeight - Math.round(ele.scrollTop) <= ele.clientHeight;
+        if(isEnd) {
+          const lastItemId = _get(listData, `${listData.length - 1}.uid`, '');
+          if(lastItemId) {
+            onScrollBottom(lastItemId);  
+          }
+        }
+        
+      }
+    }, 400);
+    ele.addEventListener('scroll', markScrollEndFn);
+    
     scrollFilterHandler = () => {
       if (!ele) return;
       if (currentScrollTop <= ele.scrollTop) {
@@ -80,9 +99,13 @@ const HomePage: React.FC = () => {
       }
       currentScrollTop = ele.scrollTop;
     }
+
     ele.addEventListener('scroll', scrollFilterHandler);
+
     return () => {
+      if (!ele) return;
       ele.removeEventListener('scroll', scrollFilterHandler);
+      ele.removeEventListener('scroll', markScrollEndFn);
     };
   }, [scrollRef]);
 
@@ -162,7 +185,6 @@ const HomePage: React.FC = () => {
             onScrollBottom={onScrollBottom}
             setWechatModalVisibility={setWechatModalVisibility}
             scrollDirection={scrollDirection}
-            setScrollDirection={setScrollDirection}
             searchStr={searchStr}
           />
         </div>
