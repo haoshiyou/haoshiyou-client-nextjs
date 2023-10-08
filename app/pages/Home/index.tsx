@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import MapContainer from '@/components/MapContainer';
 import List from '@/components/List';
 import Search from '@/components/Search';
@@ -16,6 +16,8 @@ import { splitListItems, randomSetupImg, aggregatePost } from '@/helper';
 
 import styles from './index.module.css';
 
+let currentScrollTop = 0;
+
 const HomePage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [cachedData, setCachedData] = useState<ListType[]>([]);
@@ -28,6 +30,9 @@ const HomePage: React.FC = () => {
   const [searchStr, setSearchStr] = useState('');
   const [enableScrollSplit, setEnableScrollSplit] = useState(true);
   const [scrollDirection, setScrollDirection] = useState('down');
+  const scrollRef = useRef<any>();
+  console.log(scrollDirection);
+  
   
 
   useEffect(() => {
@@ -63,6 +68,24 @@ const HomePage: React.FC = () => {
     }
   }, [searchStr]);
 
+  useEffect(() => {
+    const ele = scrollRef.current;
+    let scrollFilterHandler = () => {};
+    scrollFilterHandler = () => {
+      if (!ele) return;
+      if (currentScrollTop <= ele.scrollTop) {
+        setScrollDirection('up');
+      } else {
+        setScrollDirection('down');
+      }
+      currentScrollTop = ele.scrollTop;
+    }
+    ele.addEventListener('scroll', scrollFilterHandler);
+    return () => {
+      ele.removeEventListener('scroll', scrollFilterHandler);
+    };
+  }, [scrollRef]);
+
   const onScrollBottom = (uid: string) => {
     if (!enableScrollSplit) return;
     const idx = cachedData.findIndex((each: ListType) => each?.uid === uid);
@@ -84,7 +107,7 @@ const HomePage: React.FC = () => {
   };
 
   return (
-    <div className={styles.container}> 
+    <div className={styles.container} ref={scrollRef}> 
       {debugMode && (
         <div className={styles.mouseActionInfo}>
           ---

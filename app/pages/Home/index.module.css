@@ -5,7 +5,8 @@
   left: 0;
   top: 0;
   display: grid;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .logo {
@@ -38,15 +39,16 @@
 }
 
 .filterContainer {
-  position: absolute;
-  top: 0;
+  position: fixed;
+  top: 80px;
   right: 0;
   width: 100%;
   background-color: #f5f3f3;
-  transition: top 0.2s ease-in-out;
+  transition: top 0.25s ease-in-out;
+  z-index: 1;
 }
 .filterContainer.scrollUp {
-  top: -40px;
+  top: 40px;
 }
 
 .toggleContainer {
@@ -81,6 +83,7 @@
   z-index: 2;
   background-color: #ffffff;
   float: left;
+  position: fixed;
 }
 
 .contentContainer {
@@ -113,6 +116,7 @@
 @media screen and (max-width: 1400px) {
   .contentContainer {
     grid-template-columns: 1fr 0px;
+    padding-top: 70px;
   }
   .searchContainer {
     padding-right: 40px;
