@@ -88,10 +88,8 @@ const HomePage: React.FC = () => {
         
       }
     }, 400);
-    ele.addEventListener('scroll', markScrollEndFn);
     
     scrollFilterHandler = () => {
-      if (!ele) return;
       if (currentScrollTop <= ele.scrollTop) {
         setScrollDirection('up');
       } else {
@@ -100,6 +98,7 @@ const HomePage: React.FC = () => {
       currentScrollTop = ele.scrollTop;
     }
 
+    ele.addEventListener('scroll', markScrollEndFn);
     ele.addEventListener('scroll', scrollFilterHandler);
 
     return () => {
