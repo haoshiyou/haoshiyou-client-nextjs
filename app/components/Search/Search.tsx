@@ -57,7 +57,9 @@ const Search: React.FC<Props> = (props) => {
     setInputSearchStr(x);
   };
 
-  const dropdownOnSelect = (x: string) => {
+  const dropdownOnSelect = (x: string) => (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     setSearchStr(x);
     setInputSearchStr(x);
     reloadFilters();
@@ -110,7 +112,7 @@ const Search: React.FC<Props> = (props) => {
                               <div 
                                 key={eachO}
                                 className={styles.options} 
-                                onClick={() => dropdownOnSelect(eachO)}
+                                onClick={dropdownOnSelect(eachO)}
                               >
                                 {eachO}
                               </div>
