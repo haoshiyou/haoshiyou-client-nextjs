@@ -36,6 +36,7 @@
 .searchContainer {
   display: inline-block;
   position: relative;
+  width: calc(100vw - 60px);
 }
 
 .filterContainer {
@@ -61,10 +62,10 @@
 }
 
 .mapContainer {
-  position: relative;
-  height: 100%;
-  width: 100%;
-  float: left;
+  position: fixed;
+  height: calc(100vh - 56px);
+  width: calc(100vw - 600px);
+  right: 0;
 }
 
 .listContainer {
@@ -90,6 +91,7 @@
   height: calc(100vh - 0);
   display: grid;
   grid-template-columns: minmax(30%, 600px) 1fr;
+  padding-top: 56px;
 }
 
 .mouseActionInfo {
@@ -120,6 +122,7 @@
   }
   .searchContainer {
     padding-right: 40px;
+    width: 100%;
   }
   .toggleContainer {
     display: inline-block;
@@ -127,9 +130,15 @@
     z-index: 2;
     position: absolute;
     right: -10px;
-    top: 26px;
+    top: 24px;
   }
   .homePreviewCard {
     display: none;
+  }
+  .mapContainer {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    float: left;
   }
 }

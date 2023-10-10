@@ -9,7 +9,7 @@ import HomePreviewCard from '@/components/HomePreviewCard';
 import { ListType } from '@/types';
 import { HAOSHIYOU_REQ_URL, debugMode, mockImgMode, filterVisibility } from '@/constants';
 import { TfiViewListAlt } from 'react-icons/tfi';
-import { LuMapPin } from 'react-icons/lu';
+import { IoMapOutline } from 'react-icons/io5';
 import _get from 'lodash/get';
 import _debounce from 'lodash/debounce';
 import cls from 'classnames';
@@ -160,7 +160,7 @@ const HomePage: React.FC = () => {
           {toogleLayout === 'map' && <TfiViewListAlt onClick={() => setToogleLayout('list')} />}
           {toogleLayout === 'list' && (
            <span className={styles.iconMap}>
-            <LuMapPin onClick={() => setToogleLayout('map')} />
+            <IoMapOutline onClick={() => setToogleLayout('map')} />
            </span> 
           )
         }
