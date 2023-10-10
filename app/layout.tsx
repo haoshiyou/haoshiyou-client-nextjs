@@ -2,6 +2,7 @@ import './globals.css'
 import '@nutui/nutui-react/dist/style.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { Helmet } from "react-helmet";
 
 const inter = Inter({ subsets: ['latin'] })
 
