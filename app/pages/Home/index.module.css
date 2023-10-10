@@ -18,10 +18,10 @@
 .logo .logoIcon {
   display: inline-block;
   position: relative;
-  left: -8px;
-  top: 2px;
-  width: 56px;
-  height: 50px;
+  left: -32px;
+  top: -2px;
+  width: 36px;
+  height: 36px;
   background-size: contain;
   background-image: url(../../assets/images/haoshiyou_logo.svg);
 }
@@ -76,9 +76,9 @@
 
 .actionContainer {
   display: grid;
-  padding-top: 17px;
+  padding-top: 14px;
   grid-template-columns: 80px auto 0;
-  height: 80px;
+  height: 56px;
   width: 100%;
   z-index: 2;
   background-color: #ffffff;
@@ -87,7 +87,7 @@
 }
 
 .contentContainer {
-  height: calc(100vh - 80px);
+  height: calc(100vh - 0);
   display: grid;
   grid-template-columns: minmax(30%, 600px) 1fr;
 }
@@ -127,7 +127,7 @@
     z-index: 2;
     position: absolute;
     right: -10px;
-    top: 38px;
+    top: 26px;
   }
   .homePreviewCard {
     display: none;

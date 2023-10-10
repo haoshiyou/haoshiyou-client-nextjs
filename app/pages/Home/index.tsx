@@ -7,7 +7,7 @@ import Filter from '@/components/Filter';
 import JoinWechat from '@/components/JoinWechat';
 import HomePreviewCard from '@/components/HomePreviewCard';
 import { ListType } from '@/types';
-import { HAOSHIYOU_REQ_URL, debugMode, mockImgMode } from '@/constants';
+import { HAOSHIYOU_REQ_URL, debugMode, mockImgMode, filterVisibility } from '@/constants';
 import { TfiViewListAlt } from 'react-icons/tfi';
 import { LuMapPin } from 'react-icons/lu';
 import _get from 'lodash/get';
@@ -139,7 +139,7 @@ const HomePage: React.FC = () => {
           ---
         </div>
       )}
-      {toogleLayout === 'map' && (
+      {toogleLayout === 'map' && filterVisibility && (
             <Filter toogleLayout={toogleLayout} />
       )}
       <JoinWechat visible={wechatModalVisibility} onCancel={onModalClosed} /> 
@@ -169,8 +169,8 @@ const HomePage: React.FC = () => {
       <div className={styles.contentContainer}>
         <div className={styles.listContainer} style={{display: toogleLayout === 'list' ? 'grid' : 'none'}}>
           {toogleLayout === 'list' && (
-            <div className={cls(styles.filterContainer, scrollDirection === 'up' && styles.scrollUp)}>
-              <Filter toogleLayout={toogleLayout} />
+            <div className={cls(styles.filterContainer, scrollDirection === 'up' && filterVisibility && styles.scrollUp)}>
+              { filterVisibility && <Filter toogleLayout={toogleLayout} />}
             </div>
           )}
           <List 

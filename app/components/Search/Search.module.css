@@ -9,10 +9,11 @@
 
 .newHome {
   display: inline-block;
-  position: relative;
-  float: left;
-  width: 70px;
-  padding-left: 10px;
+    position: relative;
+    float: left;
+    width: 70px;
+    padding-left: 10px;
+    top: -10px;
 }
 .newHome:hover {
   color: #0FAFFF;
@@ -55,7 +56,7 @@
   position: relative;
   width: 100%;
   min-width: 200px;
-  top: -10px;
+  top: -18px;
 }
 
 .searchDropdown {

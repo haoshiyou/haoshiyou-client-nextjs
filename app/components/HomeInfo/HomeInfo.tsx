@@ -117,7 +117,19 @@ const HomeInfo: React.FC<Props> = (props) => {
         </div>
     </Drawer>
   );
+
+  const getContactInfoReq = () => {
+    fetch(`${HAOSHIYOU_REQ_URL}/${uid}?isContactInfoMasked=false`).then(x => x.json()).then((fetchedDetailObj) => {
+        const fetchedUid = _get(fetchedDetailObj, 'uid', '--');
+        const contactEmail = _get(fetchedDetailObj, 'owner.contactEmail', '--') || '--';
+        const wechatId = _get(fetchedDetailObj, 'owner.contactWechat', '--') || '--';
+        const contactPhone = _get(fetchedDetailObj, 'owner.contactPhone', '--') || '--';
+        setFetchedContact({ uid: fetchedUid, contactEmail, wechatId, contactPhone });
+      });
+  };
+
   const contactOnClick = () => {
+    getContactInfoReq();
     setContactDrawerVisibility(true);
   };
 
@@ -127,17 +139,13 @@ const HomeInfo: React.FC<Props> = (props) => {
       scrollwheel: false,
     };
   };
+
+  
   
   const contactInfoOnClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    fetch(`${HAOSHIYOU_REQ_URL}/${uid}?isContactInfoMasked=false`).then(x => x.json()).then((fetchedDetailObj) => {
-      const fetchedUid = _get(fetchedDetailObj, 'uid', '--');
-      const contactEmail = _get(fetchedDetailObj, 'owner.contactEmail', '--') || '--';
-      const wechatId = _get(fetchedDetailObj, 'owner.contactWechat', '--') || '--';
-      const contactPhone = _get(fetchedDetailObj, 'owner.contactPhone', '--') || '--';
-      setFetchedContact({ uid: fetchedUid, contactEmail, wechatId, contactPhone });
-    });
+    getContactInfoReq();
   };
 
   const imgOnClose = () => {

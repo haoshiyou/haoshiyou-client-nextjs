@@ -6,6 +6,7 @@ export const HAOSHIYOU_REQ_URL = 'https://haoshiyou-api-server-8defc966b222.hero
 
 export const debugMode = false;
 export const mockImgMode = false;
+export const filterVisibility = false;
 
 export const imgServicePrefix = 'https://res.cloudinary.com/xinbenlv/image/upload/c_fill,g_north,w_400,h_300,g_center/';
 export const imgServiceDetailPrefix = 'https://res.cloudinary.com/xinbenlv/image/upload/';
