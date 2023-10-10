@@ -125,6 +125,7 @@ const HomeInfo: React.FC<Props> = (props) => {
         const wechatId = _get(fetchedDetailObj, 'owner.contactWechat', '--') || '--';
         const contactPhone = _get(fetchedDetailObj, 'owner.contactPhone', '--') || '--';
         setFetchedContact({ uid: fetchedUid, contactEmail, wechatId, contactPhone });
+        setDetailObj(fetchedDetailObj);
       });
   };
 
