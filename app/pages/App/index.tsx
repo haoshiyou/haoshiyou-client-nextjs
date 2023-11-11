@@ -5,8 +5,6 @@ import Home from '@/pages/Home';
 import HomeDetail from '@/pages/HomeDetail';
 import Script from 'next/script'
 
-import styles from './index.module.css';
-
 const App: React.FC = () => {
     const searchParams = useSearchParams();
     const uid = searchParams.get('id') || '';

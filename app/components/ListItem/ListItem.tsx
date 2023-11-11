@@ -22,8 +22,6 @@ export interface Props {
 const ListItem: React.FC<Props> = (props) => {
   const { list = {}, uid, mouseoverId, setMouseoverId, popoverSelectItem,
     mouseClickedId, setMouseClickedId, setWechatModalVisibility, linkOnclick, resetPopover } = props;
-  const name = _get(list, 'name', '--');
-  const content = _get(list, 'content', '--');
   const title = _get(list, 'title', '--');
   const price = _get(list, 'price', '--');
   const addressCity = _get(list, 'addressCity', '--');

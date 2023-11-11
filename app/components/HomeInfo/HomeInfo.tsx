@@ -1,4 +1,3 @@
-'use client'
 import { Skeleton, Drawer } from 'antd';
 import { ImageViewer } from 'antd-mobile';
 import React, { useEffect, useState } from 'react';
