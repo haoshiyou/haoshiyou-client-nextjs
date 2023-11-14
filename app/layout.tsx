@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: '好室友™ 平台',
     description: '湾区,旧金山,租房,房屋出租,求租,合租,分租,短期,长期',
+    images: 'https://haoshiyou.org/_next/static/media/haoshiyou_logo.5825016d.svg',
   },
 }
 
