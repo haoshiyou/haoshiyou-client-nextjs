@@ -26,13 +26,17 @@ if (id) {
 
 // optionally access and extend (rather than replace) parent metadata
 // const previousImages = (await parent).openGraph?.images || []
-
+const metadaTitle = product.title || '好室友™平台';
+const metadaKeyword = product.title || '好室友™平台';
 return {
-    title: product.title || '好室友™平台',
+    title: metadaTitle,
     viewport: { width: 390, userScalable: false },
-    // openGraph: {
-    //   images: ['/some-specific-page-image.jpg', ...previousImages],
-    // },
+    keywords: metadaKeyword,
+    openGraph: {
+    title: metadaTitle,
+    description: metadaKeyword,
+    images: 'https://haoshiyou-client-nextjs.vercel.app/_next/static/media/haoshiyou_logo.5825016d.svg',
+  },
 }
 }
 
